@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <iframe src="http://localhost:4000/c.html#haha" frameborder="0" id="frame"></iframe>
+</body>
+<!-- 
+  a 和 b 同域， c 在单独的域。 a 想拿到 c 中的数据。
+  1. a 中引用 c
+  2. c 中动态添加 iframe, src 指向 b, 同时 src 中的 hash 就是要传输的数据
+  3. 在 b 中就可以通过 location.hash 拿到 c 传过来的数据。
+  4. 因为 b 和 a 同域， b 也可以通过 parent.parent 来获取到 a 和 b 的 hash.(a 引用了 c, c 引用了 b, 在 b 中 parent 指向了 c, c 的 parent 指向了 a, 所以是 parent.parent)
+  5. 在 b 中获取到了同域的 hash 就可以进行更改了。
+  6. 在 a 中监听 hash 的变化，从而得到数据
+ -->
+<script>
+  // 监听同域下 b 对 hash 的更改。因为 c 中引用了 b, b 可以拿到 c 传输过来的数据。
+  window.onhashchange = () => {
+    console.log('c 向 a 传输过来的数据 => ', location.hash)
+  }
+</script>
+
+</html>

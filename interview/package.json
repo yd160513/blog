@@ -1,0 +1,24 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "面试考点",
+  "main": "Object.create.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yd160513/interview.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yd160513/interview/issues"
+  },
+  "homepage": "https://github.com/yd160513/interview#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "ws": "^8.2.3"
+  }
+}

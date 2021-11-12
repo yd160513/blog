@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 全局监听 postMessage 发送过来的消息
+    window.onmessage = (e) => {
+      console.log(e.data)
+      // e.source 可以获取到是谁发送过来的，也就拿到了对应的 window
+      // e.origin 可以获取到发送过来的源
+      e.source.postMessage('children 发送到 parent 的消息', e.origin)
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "@vue/size-check",
+  "version": "3.1.4",
+  "private": true,
+  "buildOptions": {
+    "name": "Vue",
+    "formats": [
+      "global"
+    ]
+  }
+}

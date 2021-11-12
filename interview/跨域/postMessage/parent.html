@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <iframe src="http://localhost:4000/children.html" frameborder="0" id="frame" onload="load()"></iframe>
+</body>
+
+<script>
+  // iframe 加载完成之后向 iframe 发送消息
+  function load() {
+    const frame = document.getElementById('frame')
+    // 通过 postMessage 向 iframe 发送消息
+    // frame.contentWindow 拿到的是 iframe 的 window
+    // postMessage 第一个参数是要发送的数据，第二个参数是要向哪个源发送
+    frame.contentWindow.postMessage('parent 发送过来的消息', 'http://localhost:4000')
+  }
+  // 全局监听 postMessage 发送过来的消息
+  window.onmessage = (e) => {
+    console.log(e.data)
+  }
+</script>
+
+</html>

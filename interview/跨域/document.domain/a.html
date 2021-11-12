@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 当前页面: http://a.test.cn:4000/a.html -->
+  <iframe src="http://b.test.cn:4000/b.html" frameborder="0" onload="load()" id="frame"></iframe>
+</body>
+<script>
+  // a 页面和 b 页面的域名都设置为同一个
+  // 限制: 必须是一级域名和二级域名的关系
+  //    一级域名: www.baidu.com
+  //    二级域名: video.baidu.com
+  document.domain = 'test'
+  function load() {
+    const frame = document.getElementById('frame')
+    // 这里直接获取 frame 中声明的变量
+    console.log(frame.contentWindow.name)
+  }
+</script>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{ a }}
+  </div>
+</body>
+
+</html>
+
+<script src="../dist/vue.global.js"></script>
+<script>
+  const { toRefs, computed, ref, watch, watchEffect, createApp, reactive } = Vue
+debugger
+  createApp({
+    setup() {
+      const data = reactive({
+        a: 1111
+      })
+      return {
+        ...toRefs(data)
+      }
+    }
+  }).mount('#app')
+
+  // const data = reactive({
+  //   a: 1,
+  //   b: 2,
+  //   count: 0
+  // })
+  // const arr = reactive([1, 2, 3])
+
+  // debugger
+
+  // const computedVal = computed(() => {
+  //   debugger
+  //   return data.a + data.b
+  // })
+  // console.log('computedVal =>', computedVal.value)
+  // // 这里对 data.a 更新多少次都没有关系，都不会触发 computed 的执行
+  // // 只有当读取 computed 的 value 的时候，会再次触发对 computed 的求值，这个时候会触发 computed 重新计算
+  // // 问题：什么时候将重新计算的开关打开的？
+  // //  答： 在调用 computed 中声明的 scheduler 的函数中会将 this._dirty 置为 true
+  // data.a = 2
+  // data.a = 3
+  // data.a = 4
+  // data.a = 5
+  // console.log('computedVal =>', computedVal.value)
+  // const computedVal2 = computed({
+  //   get: () => {
+  //     return data.a + data.b
+  //   },
+  //   set: (value) => {
+  //     data.a = value
+  //   }
+  // })
+  // debugger
+  // console.log('computedVal2 =>', computedVal2.value)
+  // // computedVal2.value = 'hahahah'
+  // console.log('第二次求值 =>', computedVal2.value)
+
+  // {_rawValue: 0, _shallow: false, __v_isRef: true, _value: 0, value: 0}
+  // const refVal = ref(0)
+  // console.log(refVal.value)
+  // console.log(...toRefs(arr))
+
+  // // {_rawValue: {a: 1, b: 2 }, _shallow: false, __v_isRef: true, _value: {a:1, b: 2}, value: proxy}
+  // const refObj = ref({
+  //   a: 1,
+  //   b: 2
+  // })
+
+  // console.log(refObj.value.a)
+  // refObj.value = 321
+
+
+  // const arr = [1, 2]
+
+  // watch((event) => {
+  //   debugger
+  //   return data.a
+  // }, (newVal, oldVale) => {
+  //   debugger
+  // })
+
+  // setTimeout(() => {
+  //   data.a = 6
+  // }, 5000)
+
+  // data.a = 2
+  // console.log(data.a)
+
+  // 收集依赖 track()
+  // watchEffect(() => {
+  //   /**
+  //    * data.a // getter
+  //    * data.count = // setter trigger()
+  //    **/
+  //   data.count = data.a + 1
+  //   console.log('count: ', data.count)
+  // })
+
+  // watchEffect(() => {
+  //   const count2 = data.count + 1
+  //   console.log('count2: ', count2)
+  // })
+
+  // setTimeout(() => {
+  //   data.count = data.count + data.count
+  // }, 0)
+
+  // vue2: new Vue()
+  // vue3: createApp
+  // createApp({
+  //   data
+  // }).mount('#app')
+  debugger
+</script>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // a 中引用了 c, c 中引用了 b, b 的 parent.parent 就找到了 a
+  // location.hash: c 向 b 传输过来的数据
+  window.parent.parent.location.hash = location.hash
+</script>
+
+</html>

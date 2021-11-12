@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <iframe src="http://localhost:4000/c.html" frameborder="0" onload="load()" id="frame"></iframe>
+</body>
+<script>
+  // a 页面和 b 页面同域， c 页面单独一个域
+  // a 要获取 c 页面中的数据
+  //  1. 将 c 页面中要被获取的数据放到 window.name 中
+  //  2. 在 a 页面中监听 src 为 c 页面的 iframe 的 onload 的事件
+  //  3. 在 onload 事件中将 iframe 的 src 改为 b 页面的地址
+  //  4. 在 onload 事件中因为存在更改 iframe 的 src 的操作，每赋值一次就会重新触发 onload 事件，所以我们只需要更改一次就可以了，所以需要加入对应的判断。
+  //  5. 因为第一次进入 onload 事件， 这个时候加载的还是 c 页面， 这时我们不获取， 等到下一次进入 onload 事件， 这个时候加载的就是 b 页面了，然后通过 frame.contentWindow.name 就可以获取到了
+  window.first = true
+  function load() {
+    if (first) {
+      // 如果没有 first 的判断，这里会进入死循环(每次加载完成之后都会重新赋值，重新赋值又会导致重新加载。)
+      const frame = document.getElementById("frame")
+      frame.src = 'http://localhost:3000/b.html'
+      first = false
+    } else {
+      console.log('a 页面中获取到的 c 页面中的数据 => ', frame.contentWindow.name)
+    }
+  }
+</script>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+  // 这个文件直接用 file 协议打开，服务器监听的是 3000 端口，这个时候就会形成跨域，但是 websocket 没有域的概念。
+  const socket = new WebSocket('ws://localhost:3000')
+  socket.onopen = () => {
+    socket.send('前端向服务端发送的消息')
+  }
+  socket.onmessage = (e) => {
+    console.log('服务端发送过来的消息 => ', e.data)
+  }
+</script>
+
+</html>
