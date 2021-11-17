@@ -1,0 +1,82 @@
+<!-- 
+  2. 利用 flex 布局。通过在父元素上设置 align-items: center; justify-content: center; 子元素即可水平垂直居中
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    .parent {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .child {
+      width: 50px;
+      height: 50px;
+      background: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parent">
+    <div class="child"></div>
+  </div>
+</body>
+
+</html>
+
+<!-- 
+  1. 利用绝对定位，先将元素的左上角通过 top: 50% 和 left: 50% 定位到页面的中心，然后再通过 translate 来调整到中心点到页面的中心。需要考虑浏览器兼容问题
+     如果直接是在 body 下定义的 child, 则直接定义 child 的样式即可: 先将元素的左上角通过 top: 50% 和 left: 50% 定位到页面的中心，然后再通过 translate 来调整到中心点到页面的中心。
+ -->
+<!-- <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <style>
+     .parent{
+       position: relative;
+       border: 1px solid;
+       width: 800px;
+       height: 800px;
+
+     }
+ 
+     .child {
+       width: 50px;
+       height: 50px;
+       position: absolute;
+       top: 50%;
+       left: 50%;
+       translate: calc(-50%, -50%);
+       border: 1px solid red;
+     }
+   </style>
+ </head>
+ 
+ <body>
+   <div class="parent">
+     <div class="child"></div>
+   </div>
+ </body>
+ 
+ </html> -->
