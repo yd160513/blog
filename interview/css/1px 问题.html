@@ -1,0 +1,91 @@
+<!-- 
+  1px 问题是指: 在某些机型上，移动端页面的 1px 会变得很粗，呈现出不止 1px 的效果。
+      原因很简单: css 中的 1px 并不能和移动设备上的 1px 画等号。
+      它们之间的比例有一个专门的属性来描述:
+      window.devicePixelRatio = 设备的物理像素 / CSS 像素
+  打开 chrome 浏览器启动移动端调试模式，机型算则 iPhone6/7/8 控制台输出: window.devicePixelRatio 值为 2，这就意味着 CSS 中的 1px 会用 2 个物理像素来渲染
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+  第二种思路:
+    伪元素先放大后缩小（兼容性好）
+      在目标元素的后面追加一个 ::after 伪元素，让这个元素布局为 absolute 之后、整个伸展铺开在目标元素上，
+      然后把它的宽和高都设置为目标元素的两倍， border 设置为 1px。接着借助 CSS 动画特效中的缩放能力，把整个伪元素缩小为原来的 50%。
+      此时，伪元素的狂傲刚好可以和原有的目标对齐，而 border 也缩小为了 1px 的二分之一，间接的实现了 0.5px;
+ -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .test {
+      width: 50px;
+      height: 50px;
+    }
+
+    .test[data-device="2"]::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      transform: scale(0.5);
+      transform-origin: left top;
+      box-sizing: border-box;
+      border: 1px solid red;
+    }
+
+    .test[data-device="2"] {
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="test"></div>
+</body>
+
+<script>
+  const test = document.getElementsByClassName('test')[0]
+  test.setAttribute('data-device', window.devicePixelRatio)
+</script>
+
+<!-- 
+  第一种思路:
+    直接写 0.5px
+    1. 在 DOM 上增加一个自定义属性: data-device，属性值为 window.devicePixelRatio。
+    2. 在 CSS 中增加类: .test[data-device="2"] {} 类，类中定义 border: 0.5px solid;
+    3. 当自定义属性 data-device 值为 2 的时候自动匹配对应类
+ -->
+
+<!-- <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .test {
+      width: 50px;
+      height: 50px;
+    }
+
+    .test[data-device="2"] {
+      border: 0.5px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="test"></div>
+</body>
+
+<script>
+  const test = document.getElementsByClassName('test')[0]
+  test.setAttribute('data-device', window.devicePixelRatio)
+</script> -->
+
+</html>

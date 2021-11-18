@@ -1,0 +1,67 @@
+<!-- 
+  2. 创建自适应两栏布局
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .left {
+      float: left;
+      width: 200px;
+      height: 100px;
+      background: red;
+    }
+
+    .right {
+      overflow: hidden;
+      height: 100px;
+      background: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left"></div>
+  <div class="right"></div>
+</body>
+
+</html>
+
+<!-- 
+  1. 解决高度塌陷的问题:
+      在对子元素设置浮动后，父元素会发生高度塌陷，也就是父元素的高度为 0。
+      解决这个问题，只需要将父元素变成 BFC，通常的做法是对父元素增加 overflow: hidden 样式。
+ -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .parent {
+      background: lightgreen;
+      overflow: hidden;
+    }
+
+    .child {
+      float: left;
+      height: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="parent">
+    <div class="child"></div>
+  </div>
+</body>
+
+</html> -->
