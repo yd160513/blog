@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 利用 vm 来实现 */
+    .box {
+      width: 10%;
+      height: 10vw;
+      background-color: black;
+    }
+    /* 利用元素的 margin/padding 百分比是相对父元素 width 的性质来实现 */
+    .box1 {
+      width: 20%;
+      height: 0;
+      padding-top: 20%;
+      background-color: red;
+    }
+    /* 利用子元素的 margin-top 的值来实现 */
+    .box2 {
+      width: 30%;
+      overflow: hidden;
+      background-color: yellow;
+    }
+    .box2::after {
+      content: '';
+      display: block;
+      margin-top: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box"></div>
+  <div class="box1"></div>
+  <div class="box2"></div>
+</body>
+
+</html>
