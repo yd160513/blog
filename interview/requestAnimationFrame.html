@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #e {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute;
+      left: 0;
+      top: 0;
+      zoom: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="e"></div>
+  <script>
+    let e = document.getElementById("e");
+    let flag = true;
+    let left = 0;
+    let RAFId = null
+
+    // stamp: requestAnimationFrame() 的 callback 被触发的时间
+    function render(stamp) {
+      console.log('requestAnimationFrame() 的 callback 被触发的时间: ', stamp)
+      if (flag == true) {
+        if (left >= 100) {
+          flag = false
+        }
+        e.style.left = ` ${left++}px`
+      } else {
+        if (left <= 0) {
+          flag = true
+        }
+        e.style.left = ` ${left--}px`
+      }
+      if (left === 50) {
+        // 取消动画帧
+        window.cancelAnimationFrame(RAFId)
+      } else {
+        RAFId = window.requestAnimationFrame(render);
+      }
+    }
+    window.requestAnimationFrame(render);
+  </script>
+</body>
+
+</html>
