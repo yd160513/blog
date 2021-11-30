@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>实现一个扇形</title>
   <style>
-    .box {
+    #btn {
       border: 100px solid transparent;
       border-radius: 100px;
       width: 0;
@@ -18,7 +18,32 @@
 </head>
 
 <body>
-  <div class="box"></div>
+  <div id="btn"></div>
 </body>
+<script>
+  const btn = document.getElementById('btn')
+  // 命名为 click1
+  btn.addEventListener('click', () => {
+    Promise.resolve().then(() => { console.log('M1') })
+    console.log('L1')
+  })
+  // 命名为 click2
+  btn.addEventListener('click', () => {
+    Promise.resolve().then(() => { console.log('M2') })
+    console.log('L2')
+  })
+  const btn = document.getElementById('btn')
+  // 命名为 click1
+  btn.addEventListener('click', () => {
+    Promise.resolve().then(() => { console.log('M1') })
+    console.log('L1')
+  })
+  // 命名为 click2
+  btn.addEventListener('click', () => {
+    Promise.resolve().then(() => { console.log('M2') })
+    console.log('L2')
+  })
+  btn.click()
+</script>
 
 </html>

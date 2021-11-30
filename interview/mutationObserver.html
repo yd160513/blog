@@ -16,11 +16,13 @@
   </div>
   <script>
     const container = document.getElementById('container')
+    // 观察的配置(哪些变动需要观察)
     const config = {
       attribute: true,
       childList: true,
       subtree: true
     }
+    // 监听的 callback，这里可以监听到配置中对应的操作。
     function callback(mutationsList) {
       for (const item of mutationsList) {
         if (item.type === 'childList') {
@@ -30,13 +32,17 @@
         }
       }
     }
+    // 创建监听，但是并未开始监听
     const observer = new MutationObserver(callback)
+    // 调用 observe() 开始监听，第一个参数是被监听的 DOM，第二个参数是监听的配置
     function start() {
       observer.observe(container, config)
     }
+    // 操作 1: 更改属性
     function changeAttribute() {
       container.setAttribute('data-name', 'new name')
     }
+    // 操作 2: 添加子节点、删除子节点
     function addChild() {
       const child = document.createElement('div')
       child.innerHTML = '子节点'

@@ -908,11 +908,11 @@ function Animal(name) {
   this.type = 'Animal'
   this.name = name || '动物'
   // 实例函数
-  this.sleep = function() {
+  this.sleep = function () {
     console.log(`${this.name}正在睡觉!`)
   }
 }
-Animal.prototype.eat = function(food) {
+Animal.prototype.eat = function (food) {
   console.log(`${this.name}正在吃${food}`)
 }
 // 原型链继承: 重写子类 prototype 属性，将其指向父类的实例
@@ -928,7 +928,7 @@ Cat.prototype = new Animal()
  *    这个时候通过 Cat.prototype 取到的是 Animal 的实例，也就是说 Cat.prototype.constructor 其实是 Animal 实例的 constructor，自然而然也就指向了 Animal。
  */
 Cat.prototype.constructor = Cat
-Cat.prototype.eat = function() {
+Cat.prototype.eat = function () {
   console.log('我是子类原型上的 eat')
 }
 const cat = new Cat('加菲猫')
@@ -1123,14 +1123,249 @@ console.log(myRes)
 // cat.eat('猫粮') // 加菲猫正在吃猫粮
 
 // ------------------------------------------------------------------------------------------------------------------------
+// 输出顺序是什么
+// const first = () => (new Promise((resolve, reject) => {
+//   console.log(3)
+//   const p = new Promise((resolve, reject) => {
+//     console.log(7)
+//     setTimeout(() => {
+//       resolve(6)
+//       console.log(5)
+//     }, 0)
+//     resolve(1)
+//   })
+//   resolve(2)
+//   p.then(arg => {
+//     console.log(arg)
+//   }).catch(err => {
+//     reject()
+//     console.log(0)
+//   })
+// }))
+// first().then(arg => {
+//   console.log(arg)
+// }).catch(err => {
+//   console.log(8)
+// })
+// console.log(4)
+
+// ------------------------------------------------------------------------------------------------------------------------
+// /**
+//  * 1. 首先要明白使用方法
+//  *    setTimeout(() => {}, timeout)
+//  * 2. 其次要明白规则
+//  *    1. setTimeout() 接收两个参数: callback 和 timeout
+//  *    2. setTimeout() 为了不阻塞进程是放到了另外一个进程中执行的，这个时候就需要用到 node 中的 child_process
+//  */
+// // index.js
+// import { fork } from 'child_process'
+// // 宏任务队列
+// const macroTasks = []
+// function mySetTimeout(callback, timeout) {
+//   // 创建一个子进程
+//   const child = fork('./child.js')
+//   // 向子进程发送通知，对应子进程中通过 onmessage 来监听
+//   child.send({ type: 'start', timeout })
+//   // 监听子进程的返回内容
+//   child.on('message', message => {
+//     const { type } = message
+//     if (type === 'ready') {
+//       // 将 callback 添加到宏任务队列中，等待事件循环调用
+//       macroTasks.push(callback)
+//     }
+//   })
+// }
+// // 模拟事件循环。浏览器每秒循环 60 帧，也就是一秒刷新 60 次，1000/60≈16ms 得到 16ms 刷新一次
+// setInterval(() => {
+//   // 取出任务队列中的第一个，并将其从队列中删除
+//   const task = macroTasks.shift()
+//   // 执行回调
+//   task && task()
+// })
+// // child.js 子进程
+// process.on('message', message => {
+//   // index.js 中发送过来的
+//   const { type, timeout } = message
+//   // 算出结束时间，如果当前时间大于结束时间，说明 callback 可以执行了，则通知 index.js 中可以执行了
+//   const endMs = Date.now() + timeout
+//   setInterval(() => {
+//     // 如果当前时间大于结束时间，说明 callback 可以执行了，则通知父进程 callback 可以执行了
+//     if (Date.now() > endMs) {
+//       // 通知父进程
+//       process.send({ type: 'ready' })
+//       // 退出当前进程
+//       process.exit()
+//     }
+//   }, 100)
+// })
+
+// const macroTasks = []
+// let delayQueue = []
+// function mySetTimeout(callback, timeout) {
+//   // 将 callback、timeout、当前时间放到异步队列中
+//   delayQueue.push({
+//     callback,
+//     timeout,
+//     startMs: Date.now()
+//   })
+// }
+// // 模拟事件循环
+// setInterval(() => {
+//   // 执行宏任务队列中的 callback
+//   const task = macroTasks.shift()
+//   task && task()
+//   delayQueue = delayQueue.filter(item => {
+//     // 判断异步队列中的每一项是否该执行了(当前时间 > timeout + startMs)，该执行的将其放到宏任务队列中，等到下一次事件循环执行；反之继续待在异步队列中不做处理。
+//     if (Date.now() > (item.startMs + item.timeout)) {
+//       // 放到宏任务队列中等待下一次事件循环执行
+//       macroTasks.push(item.callback)
+//       // 将其从异步队列中删除
+//       return false
+//     }
+//     // 不符合执行条件的则继续保持在异步队列中
+//     return true
+//   })
+// }, 16)
 
 
 // ------------------------------------------------------------------------------------------------------------------------
+console.log('事件循环 -------------')
+// 第一题
+// async function async1() {
+//   console.log('async1 start')
+//   await async2()
+//   // await 的后边，都可以看成是 callback 里边的内容，即异步
+//   // 类似于将 await 后边的内容封装到了 Promise.resolve().then(cb) 中、setTimeout(cb) 中
+//   console.log('async1 end')
+// }
 
+// async function async2() {
+//   console.log('async2')
+// }
 
-// ------------------------------------------------------------------------------------------------------------------------
+// console.log('script start')
+// async1()
+// console.log('script end')
+/**
+ * 执行结果
+ * script start
+ * async1 start
+ * async2
+ * script end
+ * async1 end
+ */
 
+// 第二题
+// async function async1() {
+//   console.log('async1 start')
+//   await async2()
+//   // await 的后边，都可以看成是 callback 里边的内容，即异步
+//   // 类似于将 await 后边的内容封装到了 Promise.resolve().then(cb) 中、setTimeout(cb) 中
+//   console.log('async1 end')
+//   await async3()
+//   console.log('async1 end 2')
+// }
 
+// async function async2() {
+//   console.log('async2')
+// }
+
+// async function async3() {
+//   console.log('async3')
+// }
+
+// console.log('script start')
+// async1()
+// console.log('script end')
+/**
+ * 执行结果
+ * script start
+ * async1 start
+ * async2
+ * script end
+ * async1 end
+ * async3
+ * async1 end 2
+ */
+
+// 第三题
+async function async1() {
+  console.log('async1 start')
+  await async2() // resolve(Promise.resolve())
+  console.log('async1 end')
+}
+
+async function async2() {
+  console.log('async2')
+}
+
+console.log('script start')
+
+setTimeout(function () {
+  console.log('setTimeout')
+}, 0)
+
+async1()
+
+new Promise(function (resolve) {
+  console.log('promise1')
+  resolve()
+}).then(function () {
+  console.log('promise2')
+})
+
+console.log('script end')
+/**
+ * 执行结果
+ * script start
+ * async1 start
+ * async2
+ * promise1
+ * script end
+ * async1 end
+ * promise2
+ * setTimeout
+ */
+
+// 第四题
+console.log('script start')
+
+async function async1() {
+  await async2()
+  console.log('async1 end')
+}
+async function async2() {
+  console.log('async2 end')
+}
+async1()
+
+setTimeout(function () {
+  console.log('setTimeout')
+}, 0)
+
+new Promise(resolve => {
+  console.log('Promise')
+  resolve()
+})
+  .then(function () {
+    console.log('promise1')
+  })
+  .then(function () {
+    console.log('promise2')
+  })
+
+console.log('script end')
+/**
+ * 执行结果
+ * script start
+ * async2 end
+ * Promise
+ * script end
+ * async1 end
+ * promise1
+ * promise2
+ * setTimeout
+ */
 // ------------------------------------------------------------------------------------------------------------------------
 
 

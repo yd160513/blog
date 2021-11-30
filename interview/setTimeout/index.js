@@ -36,33 +36,44 @@
 //   task && task()
 // }, 16)
 
+// // 测试代码
 // mySetTimeout(() => {
 //   console.log('哈喽')
 // }, 3000)
 
 // 第二种实现方式，也是 chromium 中的实现 ------------------------------------------------------------------------------------------------------------------------
 /**
- * 在 setTimeout 函数中只是将部分参数以对象的形式存放到了另外一个数组中，
- * 在事件循环的时候去遍历这个数组，如果有符合条件的则将其对应的 callback 放到宏任务队列中
+ * 这里可以理解为: 将异步队列和宏任务队列区分开，认为他们是两个队列。
+ * 这里需要用到的是宏任务队列，setTimeout() 函数只是将 callback、timeout、还有当前时间放到了异步队列中(delayQueue) 中；
+ * 具体 callback 什么时候可以执行，是放到事件循环中。
+ * 在事件循环中会遍历异步队列，这个时候会判断异步队列中每一项是否该执行了(当前时间大于 timeout + startMs)，如果该执行了则将其放到宏任务队列中，等待下一次事件循环来执行它，并将其从任务队列中删除；
+ * 反之则不作处理，继续待在异步队列中不做处理，等待下一次事件循环继续判断。
  */
+
 const macroTasks1 = []
 let delayQueue1 = []
 function mySetTimeout1(callback, timeout) {
+  // 将 callback、timeout、当前时间放到异步队列中
   delayQueue1.push({
     timeout,
     callback,
     startMs: Date.now()
   })
 }
-
+// 模拟事件循环
 setInterval(() => {
+  // 执行宏任务队列中的 callback
   const task = macroTasks1.shift()
   task && task()
   delayQueue1 = delayQueue1.filter(item => {
+    // 判断异步队列中的每一项是否该执行了(当前时间 > timeout + startMs)，该执行的将其放到宏任务队列中，等到下一次事件循环执行；反之继续待在异步队列中不做处理。
     if (item.startMs + item.timeout <= Date.now()) {
+      // 放到宏任务队列中等待下一次事件循环执行
       macroTasks1.push(item.callback)
+      // 将其从异步队列中删除
       return false
     }
+    // 不符合执行条件的则继续保持在异步队列中
     return true
   })
 }, 16)
