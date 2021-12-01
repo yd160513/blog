@@ -162,6 +162,11 @@ function MyPromise(executor) {
   this.value = null
   // 失败的原因
   this.reason = null
+  
+  /**
+   * 当 resolve、reject 是在异步中的时候，这个时候 then 中的回调是需要等待异步的结果才会有响应。
+   * 这里增加对 then 中回调的缓存
+   */
   // 存放异步成功的缓存
   this.resolvedCache = []
   // 存放异步失败的缓存
@@ -304,7 +309,12 @@ MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
     }
     // 状态仍然为 pending 时， promise 中有异步函数
     if (this.state === 'pending') {
-      // 将成功的回调缓存起来， 等获取到成功的结果(resolve 函数中)的时候再执行
+      /**
+       * this.resolvedCache.push() 解决的问题: 
+       *    将成功的回调缓存起来， 等获取到成功的结果(resolve 函数中)的时候再执行。
+       *    如果 Promise 的 callback 中 resolve/reject 在异步中，并且多次调用这个实例上的 then，
+       *    这个时候需要将每次调用的 resolvedCallback 和 rejectedCallback 都进行缓存，所以改用数组。
+       */
       this.resolvedCache.push(() => {
         queueMicrotask(() => {
           try {
@@ -357,7 +367,7 @@ MyPromise.resolve = (parameter) => {
   // return new MyPromise((resolve, reject) => {
   //   resolve(param)
   // })
-  // 等同于上边的
+  // 如果传入的是一个非 Promise 类型。等同于上边的
   return new MyPromise(resolve => {
     resolve(parameter)
   })
@@ -384,7 +394,12 @@ function resolvePromise(promise, callbackRes, resolve, reject) {
   if (promise === callbackRes) {
     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
   }
-  // 返回值如果也是 Promise 则调用其 then 方法，等待得到 Promise 的结果
+  /**
+   * 返回值如果也是 Promise 则调用其 then 方法，等待得到 Promise 的结果。
+   *   如果 callbackRes 是一个 Promise，则链式调用的时候需要等待上一个 Promise 的结果，对应的就是调用 then() 方法来求值。
+   *   将 resolve 和 reject 传入是为了被 return 出去的 Promise(promise2) 拿到求出来的结果。
+   *   后续链式调用的时候就相当于是调用了 promise2 的 then 方法，也就可以拿到了 callbackRes 的结果。
+   */
   if (callbackRes instanceof MyPromise) {
     // 等待 Promise 的结果，交给 .then 来处理。（递归调用 then 方法）
     callbackRes.then(resolve, reject)

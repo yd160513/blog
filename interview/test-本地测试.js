@@ -167,7 +167,7 @@ function isEqual(obj1, obj2) {
 function max() {
   // 获取所有参数
   const args = Array.prototype.slice.call(arguments)
-  console.log(args)
+  // console.log(args)
   let maxVal
 
   args.forEach(item => {
@@ -387,10 +387,10 @@ Function.prototype.myApply = function (context, args) {
 // test.myApply(obj, ['hah', '123', '124213'])
 
 function fn1() {
-  console.log(1)
+  // console.log(1)
 }
 function fn2() {
-  console.log(2)
+  // console.log(2)
 }
 // fn1.myCall.myCall(fn2)
 
@@ -493,94 +493,94 @@ const add3 = curry(_add)
 
 // ------------------------------------------------------------------------------------------------------------------------
 // 手写 Promise
-function MyPromise(actuator) {
-  this.status = 'pending'
-  this.value = null
-  this.reason = null
-  this.resolvedCache = []
-  this.rejectedCache = []
+// function MyPromise(actuator) {
+//   this.status = 'pending'
+//   this.value = null
+//   this.reason = null
+//   this.resolvedCache = []
+//   this.rejectedCache = []
 
-  this.resolve = (value) => {
-    if (this.status === 'pending') {
-      this.status = 'resolved'
-      this.value = value
-      while (this.resolvedCache.length) {
-        this.resolvedCache.shift()(this.value)
-      }
-    }
-  }
-  this.reject = (reason) => {
-    if (this.status === 'pending') {
-      this.status = 'rejected'
-      this.reason = reason
-      while (this.rejectedCache.length) {
-        this.rejectedCache.shift()(this.reason)
-      }
-    }
-  }
+//   this.resolve = (value) => {
+//     if (this.status === 'pending') {
+//       this.status = 'resolved'
+//       this.value = value
+//       while (this.resolvedCache.length) {
+//         this.resolvedCache.shift()(this.value)
+//       }
+//     }
+//   }
+//   this.reject = (reason) => {
+//     if (this.status === 'pending') {
+//       this.status = 'rejected'
+//       this.reason = reason
+//       while (this.rejectedCache.length) {
+//         this.rejectedCache.shift()(this.reason)
+//       }
+//     }
+//   }
 
-  try {
-    actuator(this.resolve, this.reject)
-  } catch (error) {
-    this.reject(error)
-  }
-}
+//   try {
+//     actuator(this.resolve, this.reject)
+//   } catch (error) {
+//     this.reject(error)
+//   }
+// }
 
-MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
-  const promise2 = new MyPromise((resolve, reject) => {
-    if (this.status === 'resolved') {
-      queueMicrotask(() => {
-        const res = resolvedCallback(this.value)
-        // 这里直接使用 promise2 会报错: Cannot access 'p1' before initialization
-        // 所以这里需要引入一个微任务: queueMicrotask
-        resolvePromise(promise2, res, resolve, reject)
-      })
-    } else if (this.status === 'rejected') {
-      queueMicrotask(() => {
-        const res = rejectedCallback(this.reason)
-        resolvePromise(promise2, res, resolve, reject)
-      })
-    } else if (this.status === 'pending') {
-      this.resolvedCache.push(() => {
-        queueMicrotask(() => {
-          try {
-            const res = resolvedCallback(this.value)
-            resolvePromise(promise2, res, resolve, reject)
-          } catch (error) {
-            this.reject(error)
-          }
-        })
-      })
-      this.rejectedCache.push(() => {
-        queueMicrotask(() => {
-          try {
-            const res = rejectedCallback(this.reason)
-            resolvePromise(promise2, res, resolve, reject)
-          } catch (error) {
-            this.reject(error)
-          }
-        })
-      })
-    }
-  })
-  return promise2
-}
+// MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
+//   const promise2 = new MyPromise((resolve, reject) => {
+//     if (this.status === 'resolved') {
+//       queueMicrotask(() => {
+//         const res = resolvedCallback(this.value)
+//         // 这里直接使用 promise2 会报错: Cannot access 'p1' before initialization
+//         // 所以这里需要引入一个微任务: queueMicrotask
+//         resolvePromise(promise2, res, resolve, reject)
+//       })
+//     } else if (this.status === 'rejected') {
+//       queueMicrotask(() => {
+//         const res = rejectedCallback(this.reason)
+//         resolvePromise(promise2, res, resolve, reject)
+//       })
+//     } else if (this.status === 'pending') {
+//       this.resolvedCache.push(() => {
+//         queueMicrotask(() => {
+//           try {
+//             const res = resolvedCallback(this.value)
+//             resolvePromise(promise2, res, resolve, reject)
+//           } catch (error) {
+//             this.reject(error)
+//           }
+//         })
+//       })
+//       this.rejectedCache.push(() => {
+//         queueMicrotask(() => {
+//           try {
+//             const res = rejectedCallback(this.reason)
+//             resolvePromise(promise2, res, resolve, reject)
+//           } catch (error) {
+//             this.reject(error)
+//           }
+//         })
+//       })
+//     }
+//   })
+//   return promise2
+// }
 
-function resolvePromise(promise2, value, resolve, reject) {
-  if (promise2 === value) {
-    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
-  }
-  if (value instanceof MyPromise) {
-    value.then(resolve, reject)
-  } else {
-    resolve(value)
-  }
-}
+// function resolvePromise(promise2, value, resolve, reject) {
+//   if (promise2 === value) {
+//     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+//   }
+//   if (value instanceof MyPromise) {
+//     value.then(resolve, reject)
+//   } else {
+//     resolve(value)
+//   }
+// }
 
-const promise = new MyPromise((resolve, reject) => {
-  // const promise = new Promise((resolve, reject) => {
-  resolve(`success`)
-})
+// const promise = new MyPromise((resolve, reject) => {
+//   // const promise = new Promise((resolve, reject) => {
+//   resolve(`success`)
+// })
 // const p1 = promise.then(value => {
 //   console.log(1)
 //   console.log(`resolve => ${value}`)
@@ -764,12 +764,12 @@ const cachedBox = (() => {
 })()
 // 处理很耗时的函数
 function dealFn(id) {
-  console.log(`这是一段很耗时的操作`)
+  // console.log(`这是一段很耗时的操作`)
   return id
 }
 // 两次调用 searchBox() 函数
-console.log(cachedBox.searchBox(1)) // 计算返回的查找结果为: 1
-console.log(cachedBox.searchBox(1)) // 缓存中查找的结果为: 1
+// console.log(cachedBox.searchBox(1)) // 计算返回的查找结果为: 1
+// console.log(cachedBox.searchBox(1)) // 缓存中查找的结果为: 1
 
 // 使用数组模仿栈的实现
 const stack = (() => {
@@ -788,9 +788,9 @@ const stack = (() => {
 })()
 stack.push('abc')
 stack.push('def')
-console.log(stack.size()) // 2
-console.log(stack.pop())
-console.log(stack.size()) // 1
+// console.log(stack.size()) // 2
+// console.log(stack.pop())
+// console.log(stack.size()) // 1
 
 // ------------------------------------------------------------------------------------------------------------------------
 // 构造函数中定义实例的属性
@@ -894,11 +894,11 @@ console.log(stack.size()) // 1
 
 function Person() { }
 const person = new Person()
-console.log(person.__proto__ === Person.prototype) // true
-console.log(person.__proto__.__proto__ === Person.prototype.__proto__) // true
-console.log(person.__proto__.__proto__.__proto__ === Object.prototype.__proto__) // true
-console.log(Object.prototype.__proto__) // null
-console.log(person.__proto__.__proto__.__proto__) // null
+// console.log(person.__proto__ === Person.prototype) // true
+// console.log(person.__proto__.__proto__ === Person.prototype.__proto__) // true
+// console.log(person.__proto__.__proto__.__proto__ === Object.prototype.__proto__) // true
+// console.log(Object.prototype.__proto__) // null
+// console.log(person.__proto__.__proto__.__proto__) // null
 
 // ------------------------------------------------------------------------------------------------------------------------
 // 继承
@@ -932,12 +932,12 @@ Cat.prototype.eat = function () {
   console.log('我是子类原型上的 eat')
 }
 const cat = new Cat('加菲猫')
-console.log(cat.type) // Animal
-console.log(cat.name) // 加菲猫
-cat.sleep() // 加菲猫正在睡觉!
-cat.eat('猫粮') // 加菲猫正在吃猫粮
-console.log(cat instanceof Cat) // true
-console.log(cat instanceof Animal) // true
+// console.log(cat.type) // Animal
+// console.log(cat.name) // 加菲猫
+// cat.sleep() // 加菲猫正在睡觉!
+// cat.eat('猫粮') // 加菲猫正在吃猫粮
+// console.log(cat instanceof Cat) // true
+// console.log(cat instanceof Animal) // true
 function myInstanceof(self, target) {
   // 取到目标类型的原型
   const prototype = target.prototype
@@ -956,7 +956,7 @@ function myInstanceof(self, target) {
 }
 
 const myRes = myInstanceof(cat, Cat)
-console.log(myRes)
+// console.log(myRes)
 
 // 父类
 // function Animal() {
@@ -1229,7 +1229,7 @@ console.log(myRes)
 
 
 // ------------------------------------------------------------------------------------------------------------------------
-console.log('事件循环 -------------')
+// console.log('事件循环 -------------')
 // 第一题
 // async function async1() {
 //   console.log('async1 start')
@@ -1289,32 +1289,32 @@ console.log('事件循环 -------------')
  */
 
 // 第三题
-async function async1() {
-  console.log('async1 start')
-  await async2() // resolve(Promise.resolve())
-  console.log('async1 end')
-}
+// async function async1() {
+//   console.log('async1 start')
+//   await async2() // resolve(Promise.resolve())
+//   console.log('async1 end')
+// }
 
-async function async2() {
-  console.log('async2')
-}
+// async function async2() {
+//   console.log('async2')
+// }
 
-console.log('script start')
+// console.log('script start')
 
-setTimeout(function () {
-  console.log('setTimeout')
-}, 0)
+// setTimeout(function () {
+//   console.log('setTimeout')
+// }, 0)
 
-async1()
+// async1()
 
-new Promise(function (resolve) {
-  console.log('promise1')
-  resolve()
-}).then(function () {
-  console.log('promise2')
-})
+// new Promise(function (resolve) {
+//   console.log('promise1')
+//   resolve()
+// }).then(function () {
+//   console.log('promise2')
+// })
 
-console.log('script end')
+// console.log('script end')
 /**
  * 执行结果
  * script start
@@ -1328,33 +1328,33 @@ console.log('script end')
  */
 
 // 第四题
-console.log('script start')
+// console.log('script start')
 
-async function async1() {
-  await async2()
-  console.log('async1 end')
-}
-async function async2() {
-  console.log('async2 end')
-}
-async1()
+// async function async1() {
+//   await async2()
+//   console.log('async1 end')
+// }
+// async function async2() {
+//   console.log('async2 end')
+// }
+// async1()
 
-setTimeout(function () {
-  console.log('setTimeout')
-}, 0)
+// setTimeout(function () {
+//   console.log('setTimeout')
+// }, 0)
 
-new Promise(resolve => {
-  console.log('Promise')
-  resolve()
-})
-  .then(function () {
-    console.log('promise1')
-  })
-  .then(function () {
-    console.log('promise2')
-  })
+// new Promise(resolve => {
+//   console.log('Promise')
+//   resolve()
+// })
+//   .then(function () {
+//     console.log('promise1')
+//   })
+//   .then(function () {
+//     console.log('promise2')
+//   })
 
-console.log('script end')
+// console.log('script end')
 /**
  * 执行结果
  * script start
@@ -1367,10 +1367,261 @@ console.log('script end')
  * setTimeout
  */
 // ------------------------------------------------------------------------------------------------------------------------
+// 手写 Promise
+// 基本用法
+// const promsie = new Promise((resolve, reject) => {
+//   console.log('1')
+//   resolve("1")
+// }, reason => {
+//   console.error('失败原因: ', reason)
+// })
 
+// promsie.then(res => {
+//   console.log('then 中的结果: ', res)
+// })
+
+/**
+ * 手写 Promise
+ * @param {function} func 理解执行的 callback
+ */
+// function MyPromise(func) {
+//   // 状态
+//   this.status = 'pending'
+//   // 成功之后的值
+//   this.value = null
+//   // 失败原因
+//   this.reason = null
+//   // 当 Promise 的 callback 中有异步，并且 resolve 在异步中，这个时候就需要等待 resolve 有结果了之后再去响应到 then 中
+//   // 所以这里
+//   this.resolveCache = null
+//   this.rejectCache = null
+
+//   /**
+//    * 这里的 resolve 和 reject 如果定义成普通函数，则函数内部的 this 会指向 window/global；
+//    * 可以在内部使用 this === global/window 测试。
+//    * 因为普通函数的 this 指向是由调用时决定的。而 resolve 和 reject 是在外部调用的，所以会指向全局。
+//    * 所以这里需要改为箭头函数。
+//    */
+//   this.resolve = (_value) => {
+//     // 只有在 pending 状态才能改变状态
+//     if (this.status === 'pending') {
+//       this.status = 'resolved'
+//       this.value = _value
+//       this.resolveCache && this.resolveCache(this.value)
+//     }
+//   }
+//   this.reject = (_reason) => {
+//     if (this.status === 'pending') {
+//       this.status = 'rejected'
+//       this.reason = _reason
+//       this.rejectCache && this.rejectCache(this.reason)
+//     }
+//   }
+
+//   func(this.resolve, this.reject)
+// }
+
+// MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
+//   if (this.status === 'resolved') {
+//     resolvedCallback(this.value)
+//   } else if (this.status === 'rejected') {
+//     rejectedCallback(this.reason)
+//   } else if (this.status === 'pending') {
+//     this.resolveCache = resolvedCallback
+//     this.rejectCache = rejectedCallback
+//   }
+// }
+
+// // 1. 第一版
+// // const myPromise = new MyPromise((resolve, reject) => {
+// //   console.log('1')
+// //   resolve("1")
+// // }, reason => {
+// //   console.error('失败原因: ', reason)
+// // })
+
+// // myPromise.then(res => {
+// //   console.log('then 中的结果: ', res)
+// // })
+// // 2. 第二版，在 Promise 的 callback 中增加异步
+// const myPromise = new MyPromise((resolve, reject) => {
+//   console.log('1')
+//   setTimeout(() => {
+//     resolve("1")
+//   }, 3000)
+// })
+
+// myPromise.then(res => {
+//   console.log('then 中的结果: ', res)
+// }, reason => {
+//   console.error('失败原因: ', reason)
+// })
 
 // ------------------------------------------------------------------------------------------------------------------------
+/**
+ * 手写 Promise
+ */
+function MyPromise(callback) {
+  // Promise 的状态
+  this.status = 'pending'
+  // 成功的值
+  this.value = null
+  // 失败的原因
+  this.reason = null
+  /**
+   * 当 resolve、reject 是在异步中的时候，这个时候 then 中的回调是需要等待异步的结果才会有响应。
+   * 这里增加对 then 中回调的缓存
+   */
+  this.resolvedCache = []
+  this.rejectedCache = []
 
+  /**
+   * 这里的 resolve 和 reject 如果定义成普通函数，则函数内部的 this 会指向 window/global；
+   * 可以在内部使用 this === global/window 测试。
+   * 因为普通函数的 this 指向是由调用时决定的。而 resolve 和 reject 是在外部调用的，所以会指向全局。
+   * 所以这里需要改为箭头函数。
+   */
+  // 成功回调
+  this.resolve = (_value) => {
+    // 只能在 pending 的时候更改状态
+    if (this.status === 'pending') {
+      this.status = 'resolved'
+      this.value = _value
+      // 遍历缓存数组，将每个缓存执行并从数组中删除
+      while (this.resolvedCache.length) {
+        this.resolvedCache.shift()(this.value)
+      }
+    }
+  }
+  // 失败回调
+  this.reject = (_reason) => {
+    // 只能在 pending 的时候更改状态
+    if (this.status === 'pending') {
+      this.status = 'rejected'
+      this.reason = _reason
+      // 遍历缓存数组，将每个缓存执行并从数组中删除
+      while (this.rejectedCache.length) {
+        this.rejectedCache.shift()(this.reason)
+      }
+    }
+  }
+
+  // 立即执行
+  callback(this.resolve, this.reject)
+}
+
+const resHandle = (res, resolve, reject, thenRes) => {
+  /**
+   * 解决问题: then 方法链式调用识别 then 的 callback 中 return 的 Promise 是否是自己，是自己会报错。
+   * 这个时候需要将 then 的返回值传入进来，然后判断一下 then 的 callback return 的值和 then 的返回值是不是一样，如果一样则会报错。
+   */
+  if (res === thenRes) {
+    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+  }
+  /**
+   * 如果 resolveRes 是一个 Promise，则链式调用的时候需要等待上一个 Promise 的结果。
+   * 对应的就是调用 then() 方法来求值，将 resolve 和 reject 传入是为了被 return 出去的 Promise(thenPromise) 拿到求出来的结果。
+   * 后续链式调用的时候就相当于是调用了 thenPromise 的 then 方法，也就可以拿到了 resolveRes 的结果。
+   */
+  if (res instanceof MyPromise) {
+    // 这里将 resolve 和 reject 传入就是为了拿到 resolveRes 的结果。
+    res.then(resolve, reject)
+  }
+  // 如果是一个普通值，则用 resolve 包装
+  else {
+    resolve(res)
+  }
+}
+
+MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
+  resolvedCallback = typeof resolvedCallback === 'function' ? resolvedCallback : value => value
+  /**
+   * 问: rejectedCallback : () => { throw this.reason } 这里的 throw this.reason, 为什么不像 resolvedCallback 那样直接 return reason, 而是 throw reason?
+   * 答: 如果说这个 Promise 失败了， 同时 rejectedCallback 也没有传， 这样这个错误就会被吞掉。 
+   *     而采用 throw 则会将 resolvedCallback 的状态也置为失败， 这样在外界就可以收到 resolvedCallback 的结果， 可以做出对应的处理。
+   */
+  rejectedCallback = typeof rejectedCallback === 'function' ? rejectedCallback : reason => { throw reason }
+  // 因为要链式调用，所以这里需要 return 一个 Promise，并在后边 return 出去
+  const thenPromise = new MyPromise((resolve, reject) => {
+    // 触发成功、失败的回调
+    if (this.status === 'resolved') {
+      queueMicrotask(() => {
+        /**
+       * 将成功的值回传: resolvedCallback(this.value)
+       * 拿到 resolvedCallback() 的结果是为了链式调用。
+       */
+        const resolveRes = resolvedCallback(this.value)
+        resHandle(resolveRes, resolve, reject, thenPromise)
+      })
+    } else if (this.status === 'rejected') {
+      queueMicrotask(() => {
+        // 将失败原因回传
+        const rejectedRes = rejectedCallback(this.reason)
+        resHandle(rejectedRes, resolve, reject, rejectedRes)
+      })
+    }
+    // 当执行到 then 时状态还是 pending 说明 resolve/reject 在异步中，所以对 resolvedCallback 和 rejectedCallback 进行缓存
+    else if (this.status === 'pending') {
+      /**
+       * this.resolvedCache.push() 解决的问题: 
+       *    如果 Promise 的 callback 中 resolve/reject 在异步中，并且多次调用这个实例上的 then，
+       *    这个时候需要将每次调用的 resolvedCallback 和 rejectedCallback 都进行缓存，所以改用数组。
+       */
+      this.resolvedCache.push(() => {
+        queueMicrotask(() => {
+          const resolveRes = resolvedCallback(this.value)
+          resHandle(resolveRes, resolve, reject, resolveRes)
+        })
+      })
+      this.rejectedCache.push(() => {
+        queueMicrotask(() => {
+          const rejectedRes = rejectedCallback(this.reason)
+          resHandle(rejectedRes, resolve, reject, rejectedRes)
+        })
+      })
+    }
+  })
+
+  return thenPromise
+}
+
+MyPromise.resolve = arg => {
+  if (arg instanceof MyPromise) {
+    return arg
+  }
+  return new MyPromise((resolve, reject) => {
+    resolve(arg)
+  })
+}
+MyPromise.reject = arg => {
+  return new MyPromise((resolve, reject) => {
+    reject(arg)
+  })
+}
+
+// 测试
+const promise = new MyPromise((resolve, reject) => {
+  resolve(1)
+})
+const other = () => {
+  return new MyPromise((resolve, reject) => {
+    resolve(200)
+  })
+}
+const p1 = promise.then(res => {
+  console.log(1)
+  console.log('res => ', res)
+  return p1
+}, reason => {
+  console.log('reason => ', reason)
+})
+p1.then(res => {
+  console.log(2)
+  console.log(`res2 =>`, res)
+}, reason => {
+  console.log(3)
+  console.log(`res3 =>`, reason)
+})
 
 // ------------------------------------------------------------------------------------------------------------------------
 
