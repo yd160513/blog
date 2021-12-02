@@ -1505,9 +1505,12 @@ function MyPromise(callback) {
       }
     }
   }
-
-  // 立即执行
-  callback(this.resolve, this.reject)
+  try {
+    // 立即执行
+    callback(this.resolve, this.reject)
+  } catch (error) {
+    this.reject(error)
+  }
 }
 
 const resHandle = (res, resolve, reject, thenRes) => {
@@ -1546,18 +1549,26 @@ MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
     // 触发成功、失败的回调
     if (this.status === 'resolved') {
       queueMicrotask(() => {
-        /**
-       * 将成功的值回传: resolvedCallback(this.value)
-       * 拿到 resolvedCallback() 的结果是为了链式调用。
-       */
-        const resolveRes = resolvedCallback(this.value)
-        resHandle(resolveRes, resolve, reject, thenPromise)
+        try {
+          /**
+           * 将成功的值回传: resolvedCallback(this.value)
+           * 拿到 resolvedCallback() 的结果是为了链式调用。
+           */
+          const resolveRes = resolvedCallback(this.value)
+          resHandle(resolveRes, resolve, reject, thenPromise)
+        } catch (error) {
+          reject(error)
+        }
       })
     } else if (this.status === 'rejected') {
       queueMicrotask(() => {
-        // 将失败原因回传
-        const rejectedRes = rejectedCallback(this.reason)
-        resHandle(rejectedRes, resolve, reject, rejectedRes)
+        try {
+          // 将失败原因回传
+          const rejectedRes = rejectedCallback(this.reason)
+          resHandle(rejectedRes, resolve, reject, rejectedRes)
+        } catch (error) {
+          reject(error)
+        }
       })
     }
     // 当执行到 then 时状态还是 pending 说明 resolve/reject 在异步中，所以对 resolvedCallback 和 rejectedCallback 进行缓存
@@ -1569,14 +1580,22 @@ MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
        */
       this.resolvedCache.push(() => {
         queueMicrotask(() => {
-          const resolveRes = resolvedCallback(this.value)
-          resHandle(resolveRes, resolve, reject, resolveRes)
+          try {
+            const resolveRes = resolvedCallback(this.value)
+            resHandle(resolveRes, resolve, reject, resolveRes)
+          } catch (error) {
+            reject(error)
+          }
         })
       })
       this.rejectedCache.push(() => {
         queueMicrotask(() => {
-          const rejectedRes = rejectedCallback(this.reason)
-          resHandle(rejectedRes, resolve, reject, rejectedRes)
+          try {
+            const rejectedRes = rejectedCallback(this.reason)
+            resHandle(rejectedRes, resolve, reject, rejectedRes)
+          } catch (error) {
+            reject(error)
+          }
         })
       })
     }
