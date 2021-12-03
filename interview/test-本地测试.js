@@ -1461,188 +1461,244 @@ const myRes = myInstanceof(cat, Cat)
 /**
  * 手写 Promise
  */
-function MyPromise(callback) {
-  // Promise 的状态
-  this.status = 'pending'
-  // 成功的值
-  this.value = null
-  // 失败的原因
-  this.reason = null
-  /**
-   * 当 resolve、reject 是在异步中的时候，这个时候 then 中的回调是需要等待异步的结果才会有响应。
-   * 这里增加对 then 中回调的缓存
-   */
-  this.resolvedCache = []
-  this.rejectedCache = []
+// function MyPromise(callback) {
+//   // Promise 的状态
+//   this.status = 'pending'
+//   // 成功的值
+//   this.value = null
+//   // 失败的原因
+//   this.reason = null
+//   /**
+//    * 当 resolve、reject 是在异步中的时候，这个时候 then 中的回调是需要等待异步的结果才会有响应。
+//    * 这里增加对 then 中回调的缓存
+//    */
+//   this.resolvedCache = []
+//   this.rejectedCache = []
 
-  /**
-   * 这里的 resolve 和 reject 如果定义成普通函数，则函数内部的 this 会指向 window/global；
-   * 可以在内部使用 this === global/window 测试。
-   * 因为普通函数的 this 指向是由调用时决定的。而 resolve 和 reject 是在外部调用的，所以会指向全局。
-   * 所以这里需要改为箭头函数。
-   */
-  // 成功回调
-  this.resolve = (_value) => {
-    // 只能在 pending 的时候更改状态
-    if (this.status === 'pending') {
-      this.status = 'resolved'
-      this.value = _value
-      // 遍历缓存数组，将每个缓存执行并从数组中删除
-      while (this.resolvedCache.length) {
-        this.resolvedCache.shift()(this.value)
-      }
-    }
-  }
-  // 失败回调
-  this.reject = (_reason) => {
-    // 只能在 pending 的时候更改状态
-    if (this.status === 'pending') {
-      this.status = 'rejected'
-      this.reason = _reason
-      // 遍历缓存数组，将每个缓存执行并从数组中删除
-      while (this.rejectedCache.length) {
-        this.rejectedCache.shift()(this.reason)
-      }
-    }
-  }
-  try {
-    // 立即执行
-    callback(this.resolve, this.reject)
-  } catch (error) {
-    this.reject(error)
-  }
-}
+//   /**
+//    * 这里的 resolve 和 reject 如果定义成普通函数，则函数内部的 this 会指向 window/global；
+//    * 可以在内部使用 this === global/window 测试。
+//    * 因为普通函数的 this 指向是由调用时决定的。而 resolve 和 reject 是在外部调用的，所以会指向全局。
+//    * 所以这里需要改为箭头函数。
+//    */
+//   // 成功回调
+//   this.resolve = (_value) => {
+//     // 只能在 pending 的时候更改状态
+//     if (this.status === 'pending') {
+//       this.status = 'resolved'
+//       this.value = _value
+//       // 遍历缓存数组，将每个缓存执行并从数组中删除
+//       while (this.resolvedCache.length) {
+//         this.resolvedCache.shift()(this.value)
+//       }
+//     }
+//   }
+//   // 失败回调
+//   this.reject = (_reason) => {
+//     // 只能在 pending 的时候更改状态
+//     if (this.status === 'pending') {
+//       this.status = 'rejected'
+//       this.reason = _reason
+//       // 遍历缓存数组，将每个缓存执行并从数组中删除
+//       while (this.rejectedCache.length) {
+//         this.rejectedCache.shift()(this.reason)
+//       }
+//     }
+//   }
+//   try {
+//     // 立即执行
+//     callback(this.resolve, this.reject)
+//   } catch (error) {
+//     this.reject(error)
+//   }
+// }
 
-const resHandle = (res, resolve, reject, thenRes) => {
-  /**
-   * 解决问题: then 方法链式调用识别 then 的 callback 中 return 的 Promise 是否是自己，是自己会报错。
-   * 这个时候需要将 then 的返回值传入进来，然后判断一下 then 的 callback return 的值和 then 的返回值是不是一样，如果一样则会报错。
-   */
-  if (res === thenRes) {
-    return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
-  }
-  /**
-   * 如果 resolveRes 是一个 Promise，则链式调用的时候需要等待上一个 Promise 的结果。
-   * 对应的就是调用 then() 方法来求值，将 resolve 和 reject 传入是为了被 return 出去的 Promise(thenPromise) 拿到求出来的结果。
-   * 后续链式调用的时候就相当于是调用了 thenPromise 的 then 方法，也就可以拿到了 resolveRes 的结果。
-   */
-  if (res instanceof MyPromise) {
-    // 这里将 resolve 和 reject 传入就是为了拿到 resolveRes 的结果。
-    res.then(resolve, reject)
-  }
-  // 如果是一个普通值，则用 resolve 包装
-  else {
-    resolve(res)
-  }
-}
+// const resHandle = (res, resolve, reject, thenRes) => {
+//   /**
+//    * 解决问题: then 方法链式调用识别 then 的 callback 中 return 的 Promise 是否是自己，是自己会报错。
+//    * 这个时候需要将 then 的返回值传入进来，然后判断一下 then 的 callback return 的值和 then 的返回值是不是一样，如果一样则会报错。
+//    */
+//   if (res === thenRes) {
+//     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+//   }
+//   /**
+//    * 如果 resolveRes 是一个 Promise，则链式调用的时候需要等待上一个 Promise 的结果。
+//    * 对应的就是调用 then() 方法来求值，将 resolve 和 reject 传入是为了被 return 出去的 Promise(thenPromise) 拿到求出来的结果。
+//    * 后续链式调用的时候就相当于是调用了 thenPromise 的 then 方法，也就可以拿到了 resolveRes 的结果。
+//    */
+//   if (res instanceof MyPromise) {
+//     // 这里将 resolve 和 reject 传入就是为了拿到 resolveRes 的结果。
+//     res.then(resolve, reject)
+//   }
+//   // 如果是一个普通值，则用 resolve 包装
+//   else {
+//     resolve(res)
+//   }
+// }
 
-MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
-  resolvedCallback = typeof resolvedCallback === 'function' ? resolvedCallback : value => value
-  /**
-   * 问: rejectedCallback : () => { throw this.reason } 这里的 throw this.reason, 为什么不像 resolvedCallback 那样直接 return reason, 而是 throw reason?
-   * 答: 如果说这个 Promise 失败了， 同时 rejectedCallback 也没有传， 这样这个错误就会被吞掉。 
-   *     而采用 throw 则会将 resolvedCallback 的状态也置为失败， 这样在外界就可以收到 resolvedCallback 的结果， 可以做出对应的处理。
-   */
-  rejectedCallback = typeof rejectedCallback === 'function' ? rejectedCallback : reason => { throw reason }
-  // 因为要链式调用，所以这里需要 return 一个 Promise，并在后边 return 出去
-  const thenPromise = new MyPromise((resolve, reject) => {
-    // 触发成功、失败的回调
-    if (this.status === 'resolved') {
-      queueMicrotask(() => {
-        try {
-          /**
-           * 将成功的值回传: resolvedCallback(this.value)
-           * 拿到 resolvedCallback() 的结果是为了链式调用。
-           */
-          const resolveRes = resolvedCallback(this.value)
-          resHandle(resolveRes, resolve, reject, thenPromise)
-        } catch (error) {
-          reject(error)
-        }
-      })
-    } else if (this.status === 'rejected') {
-      queueMicrotask(() => {
-        try {
-          // 将失败原因回传
-          const rejectedRes = rejectedCallback(this.reason)
-          resHandle(rejectedRes, resolve, reject, rejectedRes)
-        } catch (error) {
-          reject(error)
-        }
-      })
-    }
-    // 当执行到 then 时状态还是 pending 说明 resolve/reject 在异步中，所以对 resolvedCallback 和 rejectedCallback 进行缓存
-    else if (this.status === 'pending') {
-      /**
-       * this.resolvedCache.push() 解决的问题: 
-       *    如果 Promise 的 callback 中 resolve/reject 在异步中，并且多次调用这个实例上的 then，
-       *    这个时候需要将每次调用的 resolvedCallback 和 rejectedCallback 都进行缓存，所以改用数组。
-       */
-      this.resolvedCache.push(() => {
-        queueMicrotask(() => {
-          try {
-            const resolveRes = resolvedCallback(this.value)
-            resHandle(resolveRes, resolve, reject, resolveRes)
-          } catch (error) {
-            reject(error)
-          }
-        })
-      })
-      this.rejectedCache.push(() => {
-        queueMicrotask(() => {
-          try {
-            const rejectedRes = rejectedCallback(this.reason)
-            resHandle(rejectedRes, resolve, reject, rejectedRes)
-          } catch (error) {
-            reject(error)
-          }
-        })
-      })
-    }
-  })
+// MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
+//   resolvedCallback = typeof resolvedCallback === 'function' ? resolvedCallback : value => value
+//   /**
+//    * 问: rejectedCallback : () => { throw this.reason } 这里的 throw this.reason, 为什么不像 resolvedCallback 那样直接 return reason, 而是 throw reason?
+//    * 答: 如果说这个 Promise 失败了， 同时 rejectedCallback 也没有传， 这样这个错误就会被吞掉。 
+//    *     而采用 throw 则会将 resolvedCallback 的状态也置为失败， 这样在外界就可以收到 resolvedCallback 的结果， 可以做出对应的处理。
+//    */
+//   rejectedCallback = typeof rejectedCallback === 'function' ? rejectedCallback : reason => { throw reason }
+//   // 因为要链式调用，所以这里需要 return 一个 Promise，并在后边 return 出去
+//   const thenPromise = new MyPromise((resolve, reject) => {
+//     // 触发成功、失败的回调
+//     if (this.status === 'resolved') {
+//       queueMicrotask(() => {
+//         try {
+//           /**
+//            * 将成功的值回传: resolvedCallback(this.value)
+//            * 拿到 resolvedCallback() 的结果是为了链式调用。
+//            */
+//           const resolveRes = resolvedCallback(this.value)
+//           resHandle(resolveRes, resolve, reject, thenPromise)
+//         } catch (error) {
+//           reject(error)
+//         }
+//       })
+//     } else if (this.status === 'rejected') {
+//       queueMicrotask(() => {
+//         try {
+//           // 将失败原因回传
+//           const rejectedRes = rejectedCallback(this.reason)
+//           resHandle(rejectedRes, resolve, reject, rejectedRes)
+//         } catch (error) {
+//           reject(error)
+//         }
+//       })
+//     }
+//     // 当执行到 then 时状态还是 pending 说明 resolve/reject 在异步中，所以对 resolvedCallback 和 rejectedCallback 进行缓存
+//     else if (this.status === 'pending') {
+//       /**
+//        * this.resolvedCache.push() 解决的问题: 
+//        *    如果 Promise 的 callback 中 resolve/reject 在异步中，并且多次调用这个实例上的 then，
+//        *    这个时候需要将每次调用的 resolvedCallback 和 rejectedCallback 都进行缓存，所以改用数组。
+//        */
+//       this.resolvedCache.push(() => {
+//         queueMicrotask(() => {
+//           try {
+//             const resolveRes = resolvedCallback(this.value)
+//             resHandle(resolveRes, resolve, reject, resolveRes)
+//           } catch (error) {
+//             reject(error)
+//           }
+//         })
+//       })
+//       this.rejectedCache.push(() => {
+//         queueMicrotask(() => {
+//           try {
+//             const rejectedRes = rejectedCallback(this.reason)
+//             resHandle(rejectedRes, resolve, reject, rejectedRes)
+//           } catch (error) {
+//             reject(error)
+//           }
+//         })
+//       })
+//     }
+//   })
 
-  return thenPromise
-}
+//   return thenPromise
+// }
 
-MyPromise.resolve = arg => {
-  if (arg instanceof MyPromise) {
-    return arg
-  }
-  return new MyPromise((resolve, reject) => {
-    resolve(arg)
-  })
-}
-MyPromise.reject = arg => {
-  return new MyPromise((resolve, reject) => {
-    reject(arg)
-  })
-}
+// MyPromise.resolve = arg => {
+//   if (arg instanceof MyPromise) {
+//     return arg
+//   }
+//   return new MyPromise((resolve, reject) => {
+//     resolve(arg)
+//   })
+// }
+// MyPromise.reject = arg => {
+//   return new MyPromise((resolve, reject) => {
+//     reject(arg)
+//   })
+// }
 
 // 测试
-const promise = new MyPromise((resolve, reject) => {
-  resolve(1)
-})
-const other = () => {
-  return new MyPromise((resolve, reject) => {
-    resolve(200)
-  })
-}
-const p1 = promise.then(res => {
-  console.log(1)
-  console.log('res => ', res)
-  return p1
-}, reason => {
-  console.log('reason => ', reason)
-})
-p1.then(res => {
-  console.log(2)
-  console.log(`res2 =>`, res)
-}, reason => {
-  console.log(3)
-  console.log(`res3 =>`, reason)
-})
+// const promise = new MyPromise((resolve, reject) => {
+//   resolve(1)
+// })
+// const other = () => {
+//   return new MyPromise((resolve, reject) => {
+//     resolve(200)
+//   })
+// }
+// const p1 = promise.then(res => {
+//   console.log(1)
+//   console.log('res => ', res)
+//   return p1
+// }, reason => {
+//   console.log('reason => ', reason)
+// })
+// p1.then(res => {
+//   console.log(2)
+//   console.log(`res2 =>`, res)
+// }, reason => {
+//   console.log(3)
+//   console.log(`res3 =>`, reason)
+// })
 
 // ------------------------------------------------------------------------------------------------------------------------
+// let promise = new Promise(function (resolve, reject) {
+//   resolve('第一次成功')
+// })
+
+// promise.then(function (val) {
+//   //第三种方法
+//   return new Promise(() => { })
+// }).catch(function (val) {
+//   console.log('返回失败')
+// }).then(function (val) {
+//   console.log('被跳过的方法')
+// })
+
+// Promise.resolve()
+//   .then(() => {
+//     console.log('[onFulfilled_1]');
+//     throw 'throw on onFulfilled_1';
+//   })
+//   .then(() => {  // 中间的函数不会被调用
+//     console.log('[onFulfilled_2]');
+//   })
+//   .catch(err => {
+//     console.log('[catch]', err);
+//   }).then(res => {
+//     console.log('catch 后的 then')
+//   })
+
+// let promise = new Promise(function (resolve, reject) {
+//   resolve('第一次成功')
+// })
+
+// promise.then(function (val) {
+//   // 两种方法意思都代表报错，【中断下一步，直接报错】
+//   // 第一种方法
+//   // throw new error()
+//   // 第二种方法　　
+//   return Promise.reject()
+// }).then(function (val) {
+//   console.log('被跳过的方法')
+// }).catch(function (val) {
+//   console.log('返回失败')
+// }).then(res => {
+//   console.log('catch 后的 then')
+// })
+
+// catch 中没有报错
+const p1 = Promise.reject('my error').catch(err => {
+  throw new Error('11')
+}).then(() => {
+  console.log('then') // 这里也会执行
+}).catch(e => {
+  console.log(e)
+})
+console.log('p1', p1) // 这里的 p1 是 resolved 状态的 promise！触发 then 回调
+
+
 
 
 // ------------------------------------------------------------------------------------------------------------------------
