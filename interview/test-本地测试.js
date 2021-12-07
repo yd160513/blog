@@ -1689,20 +1689,39 @@ const myRes = myInstanceof(cat, Cat)
 // })
 
 // catch 中没有报错
-const p1 = Promise.reject('my error').catch(err => {
-  throw new Error('11')
-}).then(() => {
-  console.log('then') // 这里也会执行
-}).catch(e => {
-  console.log(e)
-})
-console.log('p1', p1) // 这里的 p1 是 resolved 状态的 promise！触发 then 回调
-
-
-
+// const p1 = Promise.reject('my error').catch(err => {
+//   throw new Error('11')
+// }).then(() => {
+//   console.log('then') // 这里也会执行
+// }).catch(e => {
+//   console.log(e)
+// })
+// console.log('p1', p1) // 这里的 p1 是 resolved 状态的 promise！触发 then 回调
 
 // ------------------------------------------------------------------------------------------------------------------------
+// 手写 instanceof
+// function myInstanceof(left, right) {
+//   const prototype = right.prototype
+//   let __proto__ = left.__proto__
+//   while(true) {
+//     // 找到头了。原型的尽头为 null
+//     if (!__proto__) {
+//       return false
+//     }
+//     if (prototype === __proto__) {
+//       return true
+//     }
+//     __proto__ = __proto__.__proto__
+//   }
+// }
+// console.log(myInstanceof([], Array))
 
+// Object.create()
+// Object.myCreate = function(proto) {
+//   function Fn() {}
+//   Fn.prototype = proto
+//   return new Fn()
+// }
 
 // ------------------------------------------------------------------------------------------------------------------------
 
