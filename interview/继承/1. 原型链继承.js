@@ -1,3 +1,4 @@
+// 核心: 将父类实例赋值给子类原型
 // 父类
 function Animal(name) {
   // 实例属性
@@ -20,7 +21,7 @@ function Cat(name) {
   this.name = name
 }
 
-// 原型继承
+// 原型链继承
 Cat.prototype = new Animal()
 /**
  * 指回原型。

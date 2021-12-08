@@ -924,7 +924,7 @@ Cat.prototype = new Animal()
 /**
  * 核心: 将 Cat 的构造函数指向自身
  *  如果不将 Cat 原型对象的 constructor 属性指向自身的构造函数的话，那么将会指向父类的 Animal 的构造函数:
- *    通过原型继承更改了 Cat.prototype, 将 Cat 的原型改为了 Animal 的实例。
+ *    通过原型链继承更改了 Cat.prototype, 将 Cat 的原型改为了 Animal 的实例。
  *    这个时候通过 Cat.prototype 取到的是 Animal 的实例，也就是说 Cat.prototype.constructor 其实是 Animal 实例的 constructor，自然而然也就指向了 Animal。
  */
 Cat.prototype.constructor = Cat

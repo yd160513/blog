@@ -1,3 +1,4 @@
+// 核心: 组合了原型链继承和借用构造函数继承
 function Animal(name) {
   // 属性
   this.type = 'Animal'
@@ -17,7 +18,7 @@ function Cat(name) {
   this.name = name
 }
 
-// 原型继承
+// 原型链继承
 Cat.prototype = new Animal()
 Cat.prototype.constructor = Cat
 
