@@ -11,7 +11,7 @@ Animal.prototype.eat = function(food) {
   console.log(`${this.name}正在吃${food}`)
 }
 function Cat(name) {
-  // 构造函数继承
+  // 借用构造函数继承
   Animal.call(this)
   
   this.name = name

@@ -979,7 +979,7 @@ const myRes = myInstanceof(cat, Cat)
 // console.log(cat1.feature) // [1, 2, 3, 4]
 // console.log(cat2.feature) // [1, 2, 3, 4]
 
-// 构造函数继承
+// 借用构造函数继承
 // 定义一个父类 Animal 
 // function Animal(name) {
 //   // 属性
@@ -1072,7 +1072,7 @@ const myRes = myInstanceof(cat, Cat)
 //   console.log(`${this.name}正在吃${food}`)
 // }
 // function Cat(name) {
-//   // 构造函数继承
+//   // 借用构造函数继承
 //   Animal.call(this)
 //   this.name = name
 // }
@@ -1100,7 +1100,7 @@ const myRes = myInstanceof(cat, Cat)
 //   console.log(`${this.name}正在吃${food}`)
 // }
 // function Cat(name) {
-//   // 构造函数继承
+//   // 借用构造函数继承
 //   Animal.call(this)
 //   this.name = name
 // }
