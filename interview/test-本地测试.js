@@ -330,21 +330,21 @@ function parse(obj, str) {
   return obj
 }
 
-const obj = {
-  a: 1,
-  b: { c: 2 },
-  d: [1, 2, 3],
-  e: [
-    {
-      f: [4, 5, 6]
-    }
-  ]
-}
+// const obj = {
+//   a: 1,
+//   b: { c: 2 },
+//   d: [1, 2, 3],
+//   e: [
+//     {
+//       f: [4, 5, 6]
+//     }
+//   ]
+// }
 
-const r1 = parse(obj, 'a')
-const r2 = parse(obj, 'b.c')
-const r3 = parse(obj, 'd[2]')
-const r4 = parse(obj, 'e[0].f[0]')
+// const r1 = parse(obj, 'a')
+// const r2 = parse(obj, 'b.c')
+// const r3 = parse(obj, 'd[2]')
+// const r4 = parse(obj, 'e[0].f[0]')
 
 // console.log(r1)
 // console.log(r2)
@@ -633,25 +633,25 @@ function Cat(name, age) {
  * 
  * @param {function} Fun 构造函数
  */
-function myNew(Fun) {
-  // 创建实例对象
-  const obj = {}
+// function myNew(Fun) {
+//   // 创建实例对象
+//   const obj = {}
 
-  /**
-   * 将构造函数的原型赋值给实例对象
-   * eg: 在 Cat 的原型上定义了一个 sayHi() 方法，这个时候实例对象想要去调用的话就需要将实例对象的原型指向构造函数的原型，否则实例对象获取不到这个方法。
-   *     myNew(Cat, '123', 123).sayHi()
-   */
-  obj.__proto__ = Fun.prototype
+//   /**
+//    * 将构造函数的原型赋值给实例对象
+//    * eg: 在 Cat 的原型上定义了一个 sayHi() 方法，这个时候实例对象想要去调用的话就需要将实例对象的原型指向构造函数的原型，否则实例对象获取不到这个方法。
+//    *     myNew(Cat, '123', 123).sayHi()
+//    */
+//   obj.__proto__ = Fun.prototype
 
-  // 获取 new 时的参数
-  const arg = Array.prototype.slice.call(arguments, 1)
-  // 将 this 指向实例对象
-  const res = Fun.apply(obj, arg)
+//   // 获取 new 时的参数
+//   const arg = Array.prototype.slice.call(arguments, 1)
+//   // 将 this 指向实例对象
+//   const res = Fun.apply(obj, arg)
 
-  // 如果构造函数中 return 的是对象 new 返回的就是这样对象，反之如果是基本类型，则返回实例对象 obj
-  return typeof res === 'object' ? res : obj
-}
+//   // 如果构造函数中 return 的是对象 new 返回的就是这样对象，反之如果是基本类型，则返回实例对象 obj
+//   return typeof res === 'object' ? res : obj
+// }
 // console.log(myNew(Cat, '123', 123))
 // ------------------------------------------------------------------------------------------------------------------------
 // var a = [1, 2, 3]
@@ -1724,7 +1724,117 @@ const myRes = myInstanceof(cat, Cat)
 // }
 
 // ------------------------------------------------------------------------------------------------------------------------
+// 手写 call()
+// 使用方法
+const obj = {
+  a: 1
+}
+global.a = '全局的a'
+function fun(b) {
+  console.log(this.a)
+  console.log(b)
+  return 1123
+}
+// fun(123)
 
+// Function.prototype.myCall = function (context) {
+//   context = context || global // 浏览器环境下是 window，node 环境下是 global
+//   const args = [...arguments].slice(1)
+//   const temp = Symbol('temp')
+//   context[temp] = this
+//   const result = context[temp](...args)
+//   delete context[temp]
+//   return result
+// }
+Function.prototype.myCall = function(context) {
+  context = context || window
+  const args = [...arguments].slice(1)
+  const fn = Symbol('fn')
+  context[fn] = this
+  const result = context[fn](...args)
+  delete context[fn]
+  return result
+}
+// Function.prototype.myApply = function (context) {
+//   context = context || global // 浏览器环境下是 window，node 环境下是 global
+//   const secArg = [...arguments][1]
+//   const temp = Symbol('temp')
+//   context[temp] = this
+//   let result
+//   if (secArg) {
+//     result = context[temp](...secArg)
+//   } else {
+//     result = context[temp]()
+//   }
+//   delete context[temp]
+//   return result
+// }
+Function.prototype.myApply = function(context) {
+  context = context || global
+  const args = [...arguments][1]
+  const fn = Symbol('fn')
+  context[fn] = this
+  let result
+  if (args) {
+    result = context[fn](...args)
+  } else {
+    result = context[fn]()
+  }
+  delete context[fn]
+  return result
+}
+// Function.prototype.myBind = function (context) {
+//   context = context || global // 浏览器环境下是 window，node 环境下是 global
+//   const args = [...arguments].slice(1)
+//   _self = this
+//   const Fun = function(...innerArgs) {
+//     return _self.call(
+//       this instanceof _self ? this : context,
+//       ...args, ...innerArgs
+//     )
+//   }
+//   Fun.prototype = Object.create(_self.prototype)
+//   return Fun
+// }
+Function.prototype.myBind = function(context) {
+  const selfFun = this
+  const args = [...arguments].slice(1)
+  const Fun = function(...innerArgs) {
+    selfFun.call(
+      this instanceof selfFun ? this : context,
+      ...args, ...innerArgs
+    )
+  }
+  Fun.prototype = Object.create(selFun.prototype)
+  return Fun
+}
+
+
+// console.log(fun.call(obj, 123))
+// console.log(fun.myCall(obj, 123))
+
+// console.log(fun.apply(null, [1, 2, 3]))
+// console.log('----')
+// console.log(fun.myApply(null, [1, 2, 3]))
+
+function Point(x, y, z, q) {
+  this.x = x
+  this.y = y
+  console.log(x)
+  console.log(y)
+  console.log(z)
+  console.log(q)
+}
+Point.prototype.toString = function () {
+  return `${this.x},${this.y}`
+}
+let YPoint2 = Point.myBind(null, 1)
+YPoint2(2, [1, 2, 3])
+let axiosPoint2 = new YPoint2(2)
+console.log(axiosPoint2.toString())
+console.log(axiosPoint2 instanceof Point) // true
+console.log(YPoint2 instanceof Point) // false
+console.log(axiosPoint2 instanceof YPoint2) // true
 
 // ------------------------------------------------------------------------------------------------------------------------
 

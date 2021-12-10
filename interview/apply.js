@@ -8,11 +8,12 @@ Function.prototype.myApply = function(context) {
   // 这里用来改变 this 指向，使用 context 来调用 fn，this 也就指向了 context
   const fn = Symbol()
   context[fn] = this
+  const args = [...arguments][1]
   let result
   // 处理参数和 call 有区别
-  if (arguments[1]) {
+  if (args) {
     // 将函数参数结构传入到调用 apply 的函数中
-    result = context.fn(...arguments[1])
+    result = context.fn(...args)
   } else {
     // 调用 apply 的时候没有传入第二个参数
     result = context.fn()
