@@ -13,12 +13,12 @@ Function.prototype.myApply = function(context) {
   // 处理参数和 call 有区别
   if (args) {
     // 将函数参数结构传入到调用 apply 的函数中
-    result = context.fn(...args)
+    result = context[fn](...args)
   } else {
     // 调用 apply 的时候没有传入第二个参数
-    result = context.fn()
+    result = context[fn]()
   }
-  delete context.fn
+  delete context[fn]
   return result
 }
 
