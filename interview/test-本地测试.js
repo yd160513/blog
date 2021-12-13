@@ -2285,23 +2285,46 @@ Function.prototype.myBind = function (context) {
 //   return F
 // }
 
-function deepClone(obj, map = new Map) {
-  if (!obj || typeof obj === 'string') return obj
-  if (map.get(obj)) return map.get(obj)
-  const result = Array.isArray(obj) ? [] : {}
-  map.set(obj, result)
-  for (const key in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      const value = obj[key];
-      if (typeof value === 'object') {
-        result[key] = deepClone(value)
-      } else {
-        result[key] = value
-      }
-    }
-  }
-  return result
-}
+// function deepClone(obj, map = new Map) {
+//   if (!obj || typeof obj === 'string') return obj
+//   if (map.get(obj)) return map.get(obj)
+//   const result = Array.isArray(obj) ? [] : {}
+//   map.set(obj, result)
+//   for (const key in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       const value = obj[key];
+//       if (typeof value === 'object') {
+//         result[key] = deepClone(value)
+//       } else {
+//         result[key] = value
+//       }
+//     }
+//   }
+//   return result
+// }
+
+// Promise.all() 的执行过程中，继续向传入 Promise.all() 的数组中 push 数据，这个时候结果中会包含新  push 进去的数据吗？
+// 不会
+const promise1 = Promise.resolve(3);
+const promise2 = 42;
+const promise3 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 1000, 'foo');
+});
+const promise4 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 10000, 'foo');
+});
+const promise5 = Promise.resolve(123123123)
+const arr = [promise1, promise2, promise3, promise4]
+console.log('同步执行')
+setTimeout(() => {
+  console.log('开始 push', arr)
+  arr.push(promise5)
+  console.log('push 结束', arr) // [Promise, 42, Promise, Promise, Promise]
+}, 2000)
+console.log('同步执行2')
+Promise.all(arr).then((values) => {
+  console.log('最终结果: ', values); // [3, 42, 'foo', 'foo']
+});
 
 // ------------------------------------------------------------------------------------------------------------------------
 
