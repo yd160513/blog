@@ -1,25 +1,25 @@
 // isEqual 判断两个对象是否全相等
-const obj1 = {
-  a: 1,
-  b: 2,
-  c: {
-    q: 1,
-    w: 2,
-    e: 3,
-    r: [1, 2, 3]
-  }
-}
+// const obj1 = {
+//   a: 1,
+//   b: 2,
+//   c: {
+//     q: 1,
+//     w: 2,
+//     e: 3,
+//     r: [1, 2, 3]
+//   }
+// }
 
-const obj2 = {
-  a: 1,
-  b: 2,
-  c: {
-    q: 1,
-    w: 2,
-    e: 3,
-    r: [1, 2, 3]
-  }
-}
+// const obj2 = {
+//   a: 1,
+//   b: 2,
+//   c: {
+//     q: 1,
+//     w: 2,
+//     e: 3,
+//     r: [1, 2, 3]
+//   }
+// }
 
 function isObject(obj) {
   return typeof obj === 'object' && obj !== null
@@ -238,16 +238,16 @@ function unique(arr) {
 
 // ------------------------------------------------------------------------------------------------------------------------
 // 深拷贝
-function deepClone(obj) {
-  if (!obj || typeof obj !== 'object') return obj
-  const result = typeof Array.isArray(obj) ? [] : {}
-  for (const key in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      result[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
-    }
-  }
-  return result
-}
+// function deepClone(obj) {
+//   if (!obj || typeof obj !== 'object') return obj
+//   const result = typeof Array.isArray(obj) ? [] : {}
+//   for (const key in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       result[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
+//     }
+//   }
+//   return result
+// }
 
 function isObject(obj) {
   return typeof obj === 'object' || obj !== null
@@ -408,11 +408,11 @@ Function.prototype.myBind = function (context) {
 
 // ------------------------------------------------------------------------------------------------------------------------
 // Object.create
-Object.prototype.myCrate = function (prototype) {
-  function F() { }
-  F.prototype = prototype
-  return new F()
-}
+// Object.prototype.myCrate = function (prototype) {
+//   function F() { }
+//   F.prototype = prototype
+//   return new F()
+// }
 
 // ------------------------------------------------------------------------------------------------------------------------
 /**
@@ -903,59 +903,59 @@ const person = new Person()
 // ------------------------------------------------------------------------------------------------------------------------
 // 继承
 // 定义一个父类 Animal 
-function Animal(name) {
-  // 属性
-  this.type = 'Animal'
-  this.name = name || '动物'
-  // 实例函数
-  this.sleep = function () {
-    console.log(`${this.name}正在睡觉!`)
-  }
-}
-Animal.prototype.eat = function (food) {
-  console.log(`${this.name}正在吃${food}`)
-}
-// 原型链继承: 重写子类 prototype 属性，将其指向父类的实例
-function Cat(name) {
-  this.name = name
-}
-// 原型链继承
-Cat.prototype = new Animal()
-/**
- * 核心: 将 Cat 的构造函数指向自身
- *  如果不将 Cat 原型对象的 constructor 属性指向自身的构造函数的话，那么将会指向父类的 Animal 的构造函数:
- *    通过原型链继承更改了 Cat.prototype, 将 Cat 的原型改为了 Animal 的实例。
- *    这个时候通过 Cat.prototype 取到的是 Animal 的实例，也就是说 Cat.prototype.constructor 其实是 Animal 实例的 constructor，自然而然也就指向了 Animal。
- */
-Cat.prototype.constructor = Cat
-Cat.prototype.eat = function () {
-  console.log('我是子类原型上的 eat')
-}
-const cat = new Cat('加菲猫')
-// console.log(cat.type) // Animal
-// console.log(cat.name) // 加菲猫
-// cat.sleep() // 加菲猫正在睡觉!
-// cat.eat('猫粮') // 加菲猫正在吃猫粮
-// console.log(cat instanceof Cat) // true
-// console.log(cat instanceof Animal) // true
-function myInstanceof(self, target) {
-  // 取到目标类型的原型
-  const prototype = target.prototype
-  // 取到被验证的原型
-  let proto = self.__proto__
-  while (true) {
-    // null | undefined 原型的尽头是 null
-    if (!proto) {
-      return false
-    } else if (prototype === proto) {
-      return true
-    }
-    // 当前循环次上述条件都不符合就继续判断它的原型的原型，直到找到或者原型不存在(找到头了)
-    proto = proto.__proto__
-  }
-}
+// function Animal(name) {
+//   // 属性
+//   this.type = 'Animal'
+//   this.name = name || '动物'
+//   // 实例函数
+//   this.sleep = function () {
+//     console.log(`${this.name}正在睡觉!`)
+//   }
+// }
+// Animal.prototype.eat = function (food) {
+//   console.log(`${this.name}正在吃${food}`)
+// }
+// // 原型链继承: 重写子类 prototype 属性，将其指向父类的实例
+// function Cat(name) {
+//   this.name = name
+// }
+// // 原型链继承
+// Cat.prototype = new Animal()
+// /**
+//  * 核心: 将 Cat 的构造函数指向自身
+//  *  如果不将 Cat 原型对象的 constructor 属性指向自身的构造函数的话，那么将会指向父类的 Animal 的构造函数:
+//  *    通过原型链继承更改了 Cat.prototype, 将 Cat 的原型改为了 Animal 的实例。
+//  *    这个时候通过 Cat.prototype 取到的是 Animal 的实例，也就是说 Cat.prototype.constructor 其实是 Animal 实例的 constructor，自然而然也就指向了 Animal。
+//  */
+// Cat.prototype.constructor = Cat
+// Cat.prototype.eat = function () {
+//   console.log('我是子类原型上的 eat')
+// }
+// const cat = new Cat('加菲猫')
+// // console.log(cat.type) // Animal
+// // console.log(cat.name) // 加菲猫
+// // cat.sleep() // 加菲猫正在睡觉!
+// // cat.eat('猫粮') // 加菲猫正在吃猫粮
+// // console.log(cat instanceof Cat) // true
+// // console.log(cat instanceof Animal) // true
+// function myInstanceof(self, target) {
+//   // 取到目标类型的原型
+//   const prototype = target.prototype
+//   // 取到被验证的原型
+//   let proto = self.__proto__
+//   while (true) {
+//     // null | undefined 原型的尽头是 null
+//     if (!proto) {
+//       return false
+//     } else if (prototype === proto) {
+//       return true
+//     }
+//     // 当前循环次上述条件都不符合就继续判断它的原型的原型，直到找到或者原型不存在(找到头了)
+//     proto = proto.__proto__
+//   }
+// }
 
-const myRes = myInstanceof(cat, Cat)
+// const myRes = myInstanceof(cat, Cat)
 // console.log(myRes)
 
 // 父类
@@ -1746,7 +1746,7 @@ function fun(b) {
 //   delete context[temp]
 //   return result
 // }
-Function.prototype.myCall = function(context) {
+Function.prototype.myCall = function (context) {
   context = context || window
   const args = [...arguments].slice(1)
   const fn = Symbol('fn')
@@ -1769,7 +1769,7 @@ Function.prototype.myCall = function(context) {
 //   delete context[temp]
 //   return result
 // }
-Function.prototype.myApply = function(context) {
+Function.prototype.myApply = function (context) {
   context = context || global
   const args = [...arguments][1]
   const fn = Symbol('fn')
@@ -1796,10 +1796,10 @@ Function.prototype.myApply = function(context) {
 //   Fun.prototype = Object.create(_self.prototype)
 //   return Fun
 // }
-Function.prototype.myBind = function(context) {
+Function.prototype.myBind = function (context) {
   const selfFun = this
   const args = [...arguments].slice(1)
-  const Fun = function(...innerArgs) {
+  const Fun = function (...innerArgs) {
     selfFun.call(
       this instanceof selfFun ? this : context,
       ...args, ...innerArgs
@@ -1817,33 +1817,491 @@ Function.prototype.myBind = function(context) {
 // console.log('----')
 // console.log(fun.myApply(null, [1, 2, 3]))
 
-function Point(x, y, z, q) {
-  this.x = x
-  this.y = y
-  console.log(x)
-  console.log(y)
-  console.log(z)
-  console.log(q)
+// function Point(x, y, z, q) {
+//   this.x = x
+//   this.y = y
+//   console.log(x)
+//   console.log(y)
+//   console.log(z)
+//   console.log(q)
+// }
+// Point.prototype.toString = function () {
+//   return `${this.x},${this.y}`
+// }
+// let YPoint2 = Point.myBind(null, 1)
+// YPoint2(2, [1, 2, 3])
+// let axiosPoint2 = new YPoint2(2)
+// console.log(axiosPoint2.toString())
+// console.log(axiosPoint2 instanceof Point) // true
+// console.log(YPoint2 instanceof Point) // false
+// console.log(axiosPoint2 instanceof YPoint2) // true
+
+// ------------------------------------------------------------------------------------------------------------------------
+// let obj1 = {
+//   person: {
+//     name: "AAA"
+//   },
+//   test: '111'
+// };
+// let obj2 = Object.assign({}, obj1);
+// obj2.person.name = "BBB";
+// obj2.test = '222'
+// console.log(obj1); // {"person":{"name":"BBB"},"test":"111"}
+// console.log(obj2); // {"person":{"name":"BBB"},"test":"222"}
+
+// let obj1 = {
+//   person: {
+//     name: "AAA"
+//   },
+//   test: '111'
+// };
+// let obj2 = { ...obj1 };
+// obj2.person.name = "BBB";
+// obj2.test = '222'
+// console.log(obj1); // {"person":{"name":"BBB"},"test":"111"}
+// console.log(obj2); // {"person":{"name":"BBB"},"test":"222"}
+
+// let arr = [
+//   1,
+//   3,
+//   {
+//     username: 'AAA'
+//   }
+// ];
+// let arr2 = arr.concat();
+// arr2[2].username = 'BBB';
+// console.log(arr); // [1,3,{"username":"BBB"}]
+// console.log(arr2); // [1,3,{"username":"BBB"}]
+
+// let arr = [
+//   1,
+//   3,
+//   {
+//     username: 'AAA'
+//   }
+// ];
+// let arr2 = arr.slice();
+// arr2[2].username = 'BBB';
+// console.log(arr); // [1,3,{"username":"BBB"}]
+// console.log(arr2); // [1,3,{"username":"BBB"}]
+
+// function deepClone(obj) {
+//   if (typeof obj !== 'object' && obj === null) return obj
+//   const result = Array.isArray(obj) ? [] : {}
+//   for (let key in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       const value = obj[key]
+//       if (typeof value === 'object') {
+//         result[key] = deepClone(value)
+//       } else {
+//         result[key] = value
+//       }
+//     }
+//   }
+//   return result
+// }
+
+// const obj111 = {
+//   a: 1,
+//   b: 2,
+//   c: {
+//     aa: 1,
+//     bb: 2,
+//     cc: 3
+//   }
+// }
+// const res = deepClone(obj111)
+// res.c.aa = 'hhhh'
+// console.log(JSON.stringify(obj111))
+// console.log(JSON.stringify(res))
+
+
+// ------------------------------------------------------------------------------------------------------------------------
+// settimeout 第一种实现方式
+// const tasks = []
+// function mySetTimeout(callback, timeout) {
+//   const { fork } = require('child_process')
+
+//   const child = fork('./setTimeout/child2.js')
+//   child.send({ status: 'start', timeout })
+//   child.on('message', (data) => {
+//     if (data.status === 'ready') {
+//       tasks.push(callback)
+//     }
+//   })
+// }
+
+// setInterval(() => {
+//   const task = tasks.shift()
+//   task && task()
+// }, 16)
+
+// // child2.js
+// // 监听 send 事件
+// process.on('message', message => {
+//   // 父进程中发送过来的
+//   const { type, timeout } = message
+//   if (type === 'start') {
+//     // 算出结束时间(当前时间 + timeout = 结束时间)，如果当前时间大于结束时间，说明 callback 可以执行了，则通知 index.js 中可以执行了
+//     const endMs = Date.now() + timeout
+//     setInterval(() => {
+//       // 如果当前时间大于结束时间，说明 callback 可以执行了，则通知父进程 callback 可以执行了
+//       if (endMs <= Date.now()) {
+//         // 通知父进程
+//         process.send({ type: 'ready' })
+//         // 退出当前进程
+//         process.exit()
+//       }
+//     }, 100)
+//   }
+// })
+
+// setTimeout 第二种实现方式
+// let task1 = []
+// const task2 = []
+
+// function mySetTimeout(callback, timeout) {
+//   const endMs = Date.now() + timeout
+//   task1.push({
+//     timeout,
+//     callback,
+//     endMs
+//   })
+// }
+
+// setInterval(() => {
+
+//   const task = task2.shift()
+//   task && task()
+
+//   task1 = task1.filter((item) => {
+//     const { endMs, callback } = item
+//     if (Date.now() > endMs) {
+//       task2.push(callback)
+//       return false
+//     }
+//     return true
+//   })
+
+// }, 16)
+
+// // 测试
+// mySetTimeout(() => {
+//   console.log('mySetTimeout 的内容')
+// }, 3000)
+
+// 手写 promise
+// function MyPromise(callback) {
+//   this.status = 'pending'
+//   this.value = null
+//   this.reason = null
+//   this.resolveCache = []
+//   this.rejectCache = []
+
+//   this.resolve = (_value) => {
+//     if (this.status === 'pending') {
+//       this.status = 'resolved'
+//       this.value = _value
+//       while (this.resolveCache.length) {
+//         this.resolveCache.shift()(this.value)
+//       }
+//     }
+//   }
+//   this.reject = (_reason) => {
+//     if (this.status === 'pending') {
+//       this.status = 'rejected'
+//       this.reason = _reason
+//       while (this.rejectCache.length) {
+//         this.rejectCache.shift()(this.reason)
+//       }
+//     }
+//   }
+
+//   callback(this.resolve, this.reject)
+// }
+
+// MyPromise.prototype.then = function (resolvedCallback, rejectedCallback) {
+//   const tempPromise = new MyPromise((resolve, reject) => {
+//     if (this.status === 'resolved') {
+//       const result = resolvedCallback(this.value)
+//       if (result instanceof MyPromise) {
+//         result.then(resolve, reject)
+//       } else {
+//         resolve(result)
+//       }
+//     }
+//     if (this.status === 'rejected') {
+//       const result = rejectedCallback(this._reason)
+//       if (result instanceof MyPromise) {
+//         result.then(resolve, reject)
+//       } else {
+//         resolve(result)
+//       }
+//     }
+//     if (this.status === 'pending') {
+//       this.resolveCache.push(() => {
+//         const result = resolvedCallback(this.value)
+//         if (result instanceof MyPromise) {
+//           result.then(resolve, reject)
+//         } else {
+//           resolve(result)
+//         }
+//       })
+//       this.rejectCache.push(() => {
+//         const result = rejectedCallback(this.reason)
+//         if (result instanceof MyPromise) {
+//           result.then(resolve, reject)
+//         } else {
+//           resolve(result)
+//         }
+//       })
+//     }
+//   })
+//   return tempPromise
+// }
+// const myPromise = new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve(123)
+//   }, 1000)
+// }, reason => {
+//   console.log('reason =>', reason)
+// })
+// function other() {
+//   return new MyPromise((resolve, reject) => {
+//     resolve('other')
+//   })
+// }
+// myPromise.then(res => {
+//   console.log('res1 =>', res)
+//   return other()
+// }, reason => {
+//   console.log('reason =>', reason)
+// }).then(res => {
+//   console.log('res2 =>', res)
+//   return 456
+// }, reason => {
+//   console.log('reason =>', reason)
+// }).then(res => {
+//   console.log('res3 =>', res)
+// }, reason => {
+//   console.log('reason =>', reason)
+// })
+
+// Promise.all()
+// Promise.myAll = function (list) {
+//   const result = []
+//   list = Array.from(list)
+//   return new Promise((resolve, reject) => {
+//     list.forEach((item, index) => {
+//       Promise.resolve(item).then(res => {
+//         result[index] = res
+//         if (result.length === list.length) {
+//           resolve(result)
+//         }
+//       }).catch(err => {
+//         reject(err)
+//       })
+//     })
+//   })
+// }
+// const promise1 = Promise.resolve(3);
+// const promise2 = 42;
+// const promise3 = new Promise((resolve, reject) => {
+//   setTimeout(resolve, 1000, 'foo');
+// });
+
+// Promise.all([promise1, promise2, promise3]).then((values) => {
+//   console.log(values); // 返回结果: [ 3, 42, 'foo' ]
+// });
+// Promise.myAll([promise1, promise2, promise3]).then((values) => {
+//   console.log(values); // 返回结果: [ 3, 42, 'foo' ]
+// });
+
+// Promise.myRace = function (list) {
+//   list = Array.from(list)
+//   let flag = 0
+//   return new Promise((resolve, reject) => {
+//     list.forEach(item => {
+//       Promise.resolve(item).then(res => {
+//         if (!flag) {
+//           resolve(res)
+//           flag = 1
+//         }
+//       }).catch(err => {
+//         reject(err)
+//       })
+//     })
+//   })
+// }
+// Promise.race([promise1, promise2, promise3]).then((values) => {
+//   console.log(values); // 返回结果: [ 3, 42, 'foo' ]
+// });
+// Promise.myRace([promise1, promise2, promise3]).then((values) => {
+//   console.log(values); // 返回结果: [ 3, 42, 'foo' ]
+// });
+
+// 利用 Promise() 实现红绿灯效果
+// function green() {
+//   console.log('现在是绿灯')
+// }
+// function red() {
+//   console.log('现在是红灯')
+// }
+// function yellow() {
+//   console.log('现在是黄灯')
+// }
+
+// function handle(callback, timer) {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       callback()
+//       resolve()
+//     }, timer)
+//   })
+// }
+
+// function stup() {
+//   Promise.resolve().then(() => {
+//     return handle(green, 1000)
+//   }).then(() => {
+//     return handle(yellow, 4000)
+//   }).then(() => {
+//     return handle(red, 5000)
+//   }).then(() => {
+//     stup()
+//   })
+// }
+// stup()
+// ------------------------------------------------------------------------------------------------------------------------
+/**
+ * 手写 instanceof()
+ * [] instanceof Array
+ */
+// function myInstanceof(value, target) {
+//   const prototype = target.prototype
+//   let proto = value.__proto__
+//   while(true) {
+//     if (!proto) return false
+//     if (proto === prototype) {
+//       return true
+//     }
+//     proto = proto.__proto__
+//   }
+// }
+// console.log(myInstanceof([], Array))
+// console.log(myInstanceof([], Object))
+// console.log(myInstanceof('', Array))
+
+// 手写 Object.create()
+// Object.myCreate = function (proto) {
+//   function F() { }
+//   F.prototype = proto
+//   return new F()
+// }
+
+// 继承
+// 父类
+// function Animal(name) {
+//   // 实例属性
+//   this.type = 'Animal'
+//   this.name = name || '动物'
+//   this.test = []
+
+//   // 实例函数
+//   this.sleep = function () {
+//     console.log(`${this.name} 正在睡觉!`)
+//   }
+// }
+
+// // 原型方法
+// Animal.prototype.eat = function (food) {
+//   console.log(`${this.name} 正在吃 ${food}`)
+// }
+
+// // 子类
+// function Cat(name) {
+//   Animal.call(this, name)
+//   this.name = name
+// }
+
+// const proto = Object.create(Animal.prototype)
+// proto.construtor = Cat
+// Cat.prototype = proto
+
+// const cat = new Cat('加菲猫')
+// console.log(cat.type) // Animal
+// console.log(cat.name) // 加菲猫
+// cat.sleep() // 加菲猫正在睡觉!
+// cat.eat('猫粮') // 加菲猫正在吃猫粮
+
+// cat.test.push(1)
+// const cat2 = new Cat('test Cat')
+// cat2.test.push(2)
+// console.log(cat.test) // [1]
+// console.log(cat2.test) // [2]
+
+// console.log(cat instanceof Cat) // true. 实例是子类的实例
+// console.log(cat instanceof Animal) // true. 实例也是父类的实例。原型链解决。
+
+// console.log(Cat.prototype.construtor === Cat) // true
+
+// Function.prototype.myCall = function (context) {
+//   context = context || global
+//   const args = [...arguments].slice(1)
+//   const fn = Symbol('fn')
+//   context[fn] = this
+//   const result = context[fn](...args)
+//   delete context[fn]
+//   return result
+// }
+
+// Function.prototype.myApply = function (context) {
+//   context = context || global
+//   const argArr = [...arguments][1]
+//   const fn = Symbol('fn')
+//   context[fn] = this
+//   let result
+//   if (argArr) {
+//     result = context[fn](...argArr)
+//   } else {
+//     result = context[fn]()
+//   }
+//   delete context[fn]
+//   return result
+// }
+
+// Function.prototype.myBind = function (context) {
+//   context = context || global
+//   const args = [...arguments].slice(1)
+//   const _selfFun = this
+//   const F = function (...innerArgs) {
+//     return _selfFun.call(
+//       this instanceof _selfFun ? this : context,
+//       ...args,
+//       ...innerArgs
+//     )
+//   }
+//   F.prototype = Object.create(_selfFun.prototype)
+//   return F
+// }
+
+function deepClone(obj, map = new Map) {
+  if (!obj || typeof obj === 'string') return obj
+  if (map.get(obj)) return map.get(obj)
+  const result = Array.isArray(obj) ? [] : {}
+  map.set(obj, result)
+  for (const key in obj) {
+    if (Object.hasOwnProperty.call(obj, key)) {
+      const value = obj[key];
+      if (typeof value === 'object') {
+        result[key] = deepClone(value)
+      } else {
+        result[key] = value
+      }
+    }
+  }
+  return result
 }
-Point.prototype.toString = function () {
-  return `${this.x},${this.y}`
-}
-let YPoint2 = Point.myBind(null, 1)
-YPoint2(2, [1, 2, 3])
-let axiosPoint2 = new YPoint2(2)
-console.log(axiosPoint2.toString())
-console.log(axiosPoint2 instanceof Point) // true
-console.log(YPoint2 instanceof Point) // false
-console.log(axiosPoint2 instanceof YPoint2) // true
-
-// ------------------------------------------------------------------------------------------------------------------------
-
-
-// ------------------------------------------------------------------------------------------------------------------------
-
-
-// ------------------------------------------------------------------------------------------------------------------------
-
 
 // ------------------------------------------------------------------------------------------------------------------------
 

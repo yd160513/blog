@@ -43,10 +43,10 @@ const deepCloneObj = {
 deepCloneObj.c = deepCloneObj
 
 const deepCloneRes = deepClone(deepCloneObj)
-// console.log('deepClone(deepCloneObj) =>', deepCloneRes)
+console.log('deepClone(deepCloneObj) =>', deepCloneRes)
 deepCloneRes.a = 123
-// console.log('deepClone(deepCloneObj) =>', deepCloneRes)
-// console.log('deepCloneObj =>', deepCloneObj)
+console.log('deepClone(deepCloneObj) =>', deepCloneRes)
+console.log('deepCloneObj =>', deepCloneObj)
 
 // 支持多种类型的深拷贝
 const obj = {

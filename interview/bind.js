@@ -19,7 +19,7 @@ Object.myCreate = function(prototype) {
 // fn.bind(obj, 1, 2, 3, ...)(123)
 Function.prototype.myBind = function (context) {
   // 获取第一个参数: this 指向
-  context = context || window
+  context = context || global
   // 获取其他参数
   const outerArgs = [...arguments].slice(1)
   // 第一版: 不支持 new
@@ -98,7 +98,7 @@ console.log('myBind: ----------------')
 let YPoint2 = Point.myBind(null, 1)
 YPoint2(2, [1, 2, 3])
 let axiosPoint2 = new YPoint2(2)
-console.log(axiosPoint2.toString())
+console.log(axiosPoint2.toString()) // 1,2
 console.log(axiosPoint2 instanceof Point) // true
 console.log(YPoint2 instanceof Point) // false
 console.log(axiosPoint2 instanceof YPoint2) // true
