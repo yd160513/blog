@@ -23,12 +23,22 @@ function myNew(Fun) {
   const res = Fun.apply(obj, arg)
 
   // 如果构造函数中 return 的是对象 new 返回的就是这样对象，反之如果是基本类型，则返回实例对象 obj
-  return typeof res === 'object' ? res : obj
+  return typeof res === 'object' && res !== null ? res : obj
 }
+
+// 简化版
+// function myNew(parent, ...args) {
+//   const newObj = Object.create(parent.prototype)
+//   const result = parent.apply(newObj, args)
+//   return newObj
+// }
 
 function Cat(name, age) {
   this.name = name
   this.age = age
+  
+  // return {}
+  // return 123
 }
 // 构造函数原型上定义方法
 Cat.prototype.sayHi = function() {
@@ -37,4 +47,4 @@ Cat.prototype.sayHi = function() {
 
 console.log(new Cat('123', 123)) // Cat {name: '123', age: 123}
 console.log(myNew(Cat, '123', 123))
-console.log(myNew(Cat, '123', 123).sayHi())
+myNew(Cat, '123', 123).sayHi()
