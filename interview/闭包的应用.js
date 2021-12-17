@@ -1,3 +1,15 @@
+// 闭包的理解
+function parent() {
+  const value = 'parent-value'
+  return function() {
+    const val = value
+    console.log(val)
+  }
+}
+// child 函数有权访问 parent 中的变量，child 函数就被称为闭包。
+const child = parent()
+child()
+
 // 1. 封装: 使用数组模仿栈的实现
 const stack = (() => {
   const arr = []
