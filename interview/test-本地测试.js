@@ -2305,27 +2305,71 @@ Function.prototype.myBind = function (context) {
 
 // Promise.all() 的执行过程中，继续向传入 Promise.all() 的数组中 push 数据，这个时候结果中会包含新  push 进去的数据吗？
 // 不会
-const promise1 = Promise.resolve(3);
-const promise2 = 42;
-const promise3 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 1000, 'foo');
-});
-const promise4 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 10000, 'foo');
-});
-const promise5 = Promise.resolve(123123123)
-const arr = [promise1, promise2, promise3, promise4]
-console.log('同步执行')
-setTimeout(() => {
-  console.log('开始 push', arr)
-  arr.push(promise5)
-  console.log('push 结束', arr) // [Promise, 42, Promise, Promise, Promise]
-}, 2000)
-console.log('同步执行2')
-Promise.all(arr).then((values) => {
-  console.log('最终结果: ', values); // [3, 42, 'foo', 'foo']
-});
+// const promise1 = Promise.resolve(3);
+// const promise2 = 42;
+// const promise3 = new Promise((resolve, reject) => {
+//   setTimeout(resolve, 1000, 'foo');
+// });
+// const promise4 = new Promise((resolve, reject) => {
+//   setTimeout(resolve, 10000, 'foo');
+// });
+// const promise5 = Promise.resolve(123123123)
+// const arr = [promise1, promise2, promise3, promise4]
+// console.log('同步执行')
+// setTimeout(() => {
+//   console.log('开始 push', arr)
+//   arr.push(promise5)
+//   console.log('push 结束', arr) // [Promise, 42, Promise, Promise, Promise]
+// }, 2000)
+// console.log('同步执行2')
+// Promise.all(arr).then((values) => {
+//   console.log('最终结果: ', values); // [3, 42, 'foo', 'foo']
+// });
 
 // ------------------------------------------------------------------------------------------------------------------------
+/**
+ * 使用JS实现一个 repeat 方法 log 4次 hello world, 每次间隔3秒
+ *    加大难度版：输出第几次helloworld
+ */
+// function repeat(num) {
+//   let count = 1
+//   function handle() {
+//     setTimeout(() => {
+//       if (count <= 4) {
+//         console.log(`第${count}次`)
+//         if (count === num) {
+//           console.log('hello world')
+//         }
+//         count++
+//         handle()
+//       }
+//     }, 500)
+//   }
+//   handle()
+// }
+// repeat(3)
+
+/**
+ * 实现一个一维数组转二维数组的方法（arrayToMatrix）传入一个一维数组 arr 以及转换后每个数组的长度 length。
+ * arrToMatrix([1, 2, 3, 4, 5, 6, 7, 8, 9], 2) 返回 [[1, 2], [3, 4], [5, 6], [7, 8], [9]]
+ */
+function arrToMatrix(arr, len) {
+  const result = []
+  let index = 0
+  while (arr.length) {
+    const item = arr.shift()
+    if (!result[index]) {
+      result[index] = []
+    } else if (result[index].length === len) {
+      index += 1
+      result[index] = []
+    }
+    result[index].push(item)
+  }
+
+  return result
+}
+const result = arrToMatrix([1, 2, 3, 4, 5, 6, 7, 8, 9], 4)
+console.log(result)
 
 
