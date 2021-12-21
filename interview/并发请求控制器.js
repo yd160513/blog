@@ -19,8 +19,8 @@ const request = api => {
   const wait = Math.random() * 3000
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      reject(`${api} 请求结束，可以进行下一次请求`)
-      // resolve(`${api} 请求结束，可以进行下一次请求`)
+      // reject(`${api} 请求结束，可以进行下一次请求`)
+      resolve(`${api} 请求结束，可以进行下一次请求`)
     }, wait)
   })
 }
@@ -31,7 +31,9 @@ const request = api => {
 //   request(api)
 // }
 
-// 并发请求控制器
+/**
+ * 第一种实现方式: 通过 for 循环实现。 
+ */
 function requestLimit(apiList, limit) {
   // 记录请求中的接口数量
   let count = 0
@@ -96,9 +98,49 @@ function requestLimit(apiList, limit) {
   })
 }
 
+/**
+ * 第二种实现方式: 通过 Promise.all() 实现。
+ */
+function requestLimit(apiList, limit) {
+  // 对 apiList 进行浅拷贝，避免后续的 shift() 对原始数据造成影响。
+  const list = [...apiList]
+  // 用来存放所有 api 的请求结果。因为哪个接口先完成是不固定的，所以这里存放的其实是一个无序的。
+  const map = new Map()
+  // 处理器
+  const handle = () => {
+    if (list.length) {
+      // 从列表中取出一个。
+      const api = list.shift()
+      return request(api).then(res => {
+        // 将每个接口的结果以 api 为 key 存到 map 中。
+        map.set(api, res)
+        /**
+         * 递归调用
+         * 这里隐式的进行了并发限制: 因为是在接口请求完成后(then() 方法)后进行的递归调用，也就是只有当一个请求完成了才会进行下一次请求。
+         */
+        return handle()
+      })
+    }
+  }
+
+  /**
+   * Array(number): 创建一定长度的数组。
+   * Math.min(): 接收 N 个参数，返回所有参数中最小值。
+   * Array.fill(): 用传入的参数来填充数组。
+   */
+  // Promise list 中每个 promise 的 then 的 callback 都是 handle 函数。
+  const promiseList = Array(Math.min(apiList.length, limit)).fill(Promise.resolve()).map(promise => promise.then(handle))
+
+  return Promise.all(promiseList).then(res => {
+    // map 中存放是无序的，这里通过 apiList 来生成一个有序的 list。
+    const result = apiList.map(api => map.get(api))
+    return result
+  })
+}
+
 // 测试
 requestLimit(apiList, 3).then(res => {
-  console.log(res)
+  console.log('调用方收到的结果: ', res)
 }).catch(err => {
   console.log('请求失败!', err)
 })
