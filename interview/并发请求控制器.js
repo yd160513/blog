@@ -17,11 +17,10 @@ const request = api => {
 
   // 请求时间 0 ~ 3 秒
   const wait = Math.random() * 3000
-
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      // reject(`${api} 请求结束，可以进行下一次请求`)
-      resolve(`${api} 请求结束，可以进行下一次请求`)
+      reject(`${api} 请求结束，可以进行下一次请求`)
+      // resolve(`${api} 请求结束，可以进行下一次请求`)
     }, wait)
   })
 }
@@ -65,18 +64,21 @@ function requestLimit(apiList, limit) {
           resolve('所有接口请求完毕!')
         }
       }).catch(err => {
-        /**
-         * 整体逻辑是进入无线重试，弊端就是会阻塞后边的代码执行。
-         */
-        console.log(err)
-        // 1. 接口失败之后也将请求中的接口 -1
-        --count
-        // 2. 将失败的接口再次 push 到 apiList 中
-        apiList.push(api)
-        // 3. 接口列表中还有待请求的接口时则如果还没有到最大并发的限制，则发起新的请求。
-        if (apiList.length && count <= limit) {
-          handle()
-        }
+        // 解决无限重试的弊端: 有错就 return reject()
+        return reject(err)
+        
+        // /**
+        //  * 整体逻辑是进入无线重试，弊端就是会阻塞后边的代码执行。
+        //  */
+        // console.log(err)
+        // // 1. 接口失败之后也将请求中的接口 -1
+        // --count
+        // // 2. 将失败的接口再次 push 到 apiList 中
+        // apiList.push(api)
+        // // 3. 接口列表中还有待请求的接口时则如果还没有到最大并发的限制，则发起新的请求。
+        // if (apiList.length && count <= limit) {
+        //   handle()
+        // }
       })
     }
 
@@ -91,4 +93,6 @@ function requestLimit(apiList, limit) {
 // 测试
 requestLimit(apiList, 3).then(res => {
   console.log(res)
+}).catch(err => {
+  console.log('请求失败!', err)
 })
