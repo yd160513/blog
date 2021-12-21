@@ -64,9 +64,15 @@ function requestLimit(apiList, limit) {
           resolve('所有接口请求完毕!')
         }
       }).catch(err => {
+        /**
+         * 针对有错误的时候的方案: 
+         *  1. 整体逻辑是进入无线重试，弊端就是会阻塞后边的代码执行。
+         *  2. 解决无限重试的弊端: 有错就 return reject()。
+         *  3. 最优解: 重试几次之后再向外抛出。
+         */
         // 解决无限重试的弊端: 有错就 return reject()
         return reject(err)
-        
+
         // /**
         //  * 整体逻辑是进入无线重试，弊端就是会阻塞后边的代码执行。
         //  */
