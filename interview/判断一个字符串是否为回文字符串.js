@@ -3,6 +3,7 @@ const str1 = 'abcdba'
 
 /**
  * 将字符串翻转形成一个新的字符串，两个字符串做对比，看看是否相等
+ * reverse(): 会改变原数组。
  */
 // function test(str) {
 //   const temp = str.split('').reverse().join('')

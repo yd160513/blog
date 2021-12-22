@@ -2498,7 +2498,7 @@ const requestWithLimit = (apiList, limit = 3) => {
 function testHandle(arr) {
   let start = 0
   let end = arr.length - 1
-  while(start < end) {
+  while (start < end) {
     if (arr[start] === arr[end]) {
       ++start
       --end
@@ -2509,7 +2509,75 @@ function testHandle(arr) {
   return true
 }
 
-console.log(testHandle([1, 2, 2, 1,3]))
+// console.log(testHandle([1, 2, 2, 1,3]))
 
+// ------------------------------------------------
+
+// function handle(arr) {
+//   // reverse(): 会改变原数组，所以这里进行一次浅拷贝
+//   const reverseStr = [...arr].reverse().join('')
+//   const str = arr.join('')
+//   return reverseStr === str
+// }
+// function handle(arr) {
+//   // 开始索引
+//   let start = 0
+//   // 结束索引
+//   let end = arr.length - 1
+//   // 如果开始索引一直小于结束索引说明还有需要比较的项则一直遍历。
+//   while (start < end) {
+//     const item1 = arr[start]
+//     const item2 = arr[end]
+//     // 两个索引值相等则比较下一项
+//     if (item1 === item2) {
+//       ++start
+//       --end
+//     } else {
+//       return false
+//     }
+//   }
+//   return true
+// }
+
+// console.log(handle([1, 2, 3, 2, 1]))
+
+
+// 实现一个 repeat 方法 log 4次 hello world, 每次间隔3秒
+// function repeat(num) {
+//   let count = 1
+
+//   const handle = () => {
+//     setTimeout(() => {
+//       console.log('hello world')
+//       ++count
+//       if (count <= num) {
+//         handle()
+//       }
+//     }, 3000)
+//   }
+
+//   handle()
+// }
+// repeat(4)
+// 加大难度版：输出第几次helloworld
+function repeat(num, con) {
+  let count = 1
+
+  const handle = () => {
+    setTimeout(() => {
+      console.log(`第${count}次`)
+      if (count === con) {
+        console.log('hello world')
+      }
+      ++count
+      if (count <= num) {
+        handle()
+      }
+    }, 3000)
+  }
+
+  handle()
+}
+repeat(4, 3)
 
 
