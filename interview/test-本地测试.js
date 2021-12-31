@@ -2578,6 +2578,19 @@ function repeat(num, con) {
 
   handle()
 }
-repeat(4, 3)
+// repeat(4, 3)
 
-
+function handle(a, b, c, d, e) {
+  return a + b + c + d + e
+}
+function currying(fn, ...args) {
+  if (fn.length === args.length) {
+    return fn(...args)
+  } else {
+    return (...innerArgs) => currying(fn, ...args, ...innerArgs)
+  }
+}
+const _curring = currying(handle)
+console.log(_curring(1, 2, 3, 4, 5))
+console.log(_curring(1, 2, 3)(4, 5))
+console.log(_curring(1)(2)(3)(4)(5))
