@@ -164,19 +164,19 @@ function isEqual(obj1, obj2) {
 
 // ------------------------------------------------------------------------------------------------------------------------
 // 手写 max 方法
-function max() {
-  // 获取所有参数
-  const args = Array.prototype.slice.call(arguments)
-  // console.log(args)
-  let maxVal
+// function max() {
+//   // 获取所有参数
+//   const args = Array.prototype.slice.call(arguments)
+//   // console.log(args)
+//   let maxVal
 
-  args.forEach(item => {
-    // !maxVal: 第一次循环 maxVal 是 undefined 所以需要将 item 赋值给它
-    // maxVal < item: item 大于上一次的 maxVal
-    if (!maxVal || maxVal < item) maxVal = item
-  })
-  return maxVal
-}
+//   args.forEach(item => {
+//     // !maxVal: 第一次循环 maxVal 是 undefined 所以需要将 item 赋值给它
+//     // maxVal < item: item 大于上一次的 maxVal
+//     if (!maxVal || maxVal < item) maxVal = item
+//   })
+//   return maxVal
+// }
 
 // console.log(max(1, 2, 3, 99, 20, 10, 30))
 
@@ -2580,17 +2580,45 @@ function repeat(num, con) {
 }
 // repeat(4, 3)
 
-function handle(a, b, c, d, e) {
-  return a + b + c + d + e
+// function handle(a, b, c, d, e) {
+//   return a + b + c + d + e
+// }
+// function currying(fn, ...args) {
+//   if (fn.length === args.length) {
+//     return fn(...args)
+//   } else {
+//     return (...innerArgs) => currying(fn, ...args, ...innerArgs)
+//   }
+// }
+// const _curring = currying(handle)
+// console.log(_curring(1, 2, 3, 4, 5))
+// console.log(_curring(1, 2, 3)(4, 5))
+// console.log(_curring(1)(2)(3)(4)(5))
+
+// 获取多个数字中的最大值 - max() 方法
+// function max() {
+//   const args = Array.prototype.slice.call(arguments)
+//   let maxVal
+//   args.forEach(item => {
+//     if (item > maxVal || !maxVal) maxVal = item
+//   })
+//   return maxVal
+// }
+// console.log(max(1, 2, 3, 99, 20, 10, 30))
+
+// 手写 flat 函数 - 将多维数组转换为一维数组
+function myFlat(arr) {
+  const isDeep = arr.some(item => item instanceof Array)
+  if (!isDeep) return arr
+  const res = Array.prototype.concat.apply([], arr)
+  return myFlat(res)
 }
-function currying(fn, ...args) {
-  if (fn.length === args.length) {
-    return fn(...args)
-  } else {
-    return (...innerArgs) => currying(fn, ...args, ...innerArgs)
-  }
-}
-const _curring = currying(handle)
-console.log(_curring(1, 2, 3, 4, 5))
-console.log(_curring(1, 2, 3)(4, 5))
-console.log(_curring(1)(2)(3)(4)(5))
+const testArr = [
+  1, 2, 3, 4, 5,
+  [9, 0, 88, 99],
+  [
+    11, 22, 33, 44,
+    [555, 444, 44444, 22222]
+  ]
+]
+console.log(myFlat(testArr))
