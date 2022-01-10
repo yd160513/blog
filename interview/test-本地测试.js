@@ -1726,15 +1726,15 @@ const person = new Person()
 // ------------------------------------------------------------------------------------------------------------------------
 // 手写 call()
 // 使用方法
-const obj = {
-  a: 1
-}
-global.a = '全局的a'
-function fun(b) {
-  console.log(this.a)
-  console.log(b)
-  return 1123
-}
+// const obj = {
+//   a: 1
+// }
+// global.a = '全局的a'
+// function fun(b) {
+//   console.log(this.a)
+//   console.log(b)
+//   return 1123
+// }
 // fun(123)
 
 // Function.prototype.myCall = function (context) {
@@ -2646,12 +2646,64 @@ function repeat(num, con) {
 // console.log(Array.prototype.isPrototypeOf([])) // true
 
 // isNaN 和 Number.isNaN 的区别
-console.log(isNaN('123')) // false
-console.log(isNaN('aaa')) // true
-console.log(isNaN({})) // true
-console.log(isNaN(NaN)) // true
-console.log('--')
-console.log(Number.isNaN('123')) // false
-console.log(Number.isNaN('aaa')) // false
-console.log(Number.isNaN({})) // false
-console.log(Number.isNaN(NaN)) // true
+// console.log(isNaN('123')) // false
+// console.log(isNaN('aaa')) // true
+// console.log(isNaN({})) // true
+// console.log(isNaN(NaN)) // true
+// console.log('--')
+// console.log(Number.isNaN('123')) // false
+// console.log(Number.isNaN('aaa')) // false
+// console.log(Number.isNaN({})) // false
+// console.log(Number.isNaN(NaN)) // true
+
+// 极大 number 转字符串
+// const value = 999999999999999999999999999999999999
+// const value = Symbol('123')
+// const str = value.toString()
+// console.log(str)
+// console.log(typeof str)
+
+// Object.assign 和扩展运算符的区别
+// let outObj = {
+//   inObj: {a: 1, b: 2},
+//   test: 123
+// }
+// let newObj = {...outObj}
+// newObj.inObj.a = 2
+// newObj.test = 456
+// console.log(JSON.stringify(outObj)) // {"inObj":{"a":2,"b":2},"test":123}
+// let outObj = {
+//   inObj: {a: 1, b: 2},
+//   test: 123
+// }
+// let newObj = Object.assign({}, outObj)
+// newObj.inObj.a = 2
+// newObj.test = 456
+// console.log(JSON.stringify(outObj)) // {"inObj":{"a":2,"b":2},"test":123}
+
+// proxy() 实现数据响应式
+// let onWatch = (obj, setBind, getLogger) => {
+//   let handler = {
+//     get(target, property, receiver) {
+//       getLogger(target, property)
+//       return Reflect.get(target, property, receiver)
+//     },
+//     set(target, property, value, receiver) {
+//       setBind(value, property)
+//       return Reflect.set(target, property, value)
+//     }
+//   }
+//   return new Proxy(obj, handler)
+// }
+// let obj = { a: 1 }
+// let p = onWatch(
+//   obj,
+//   (v, property) => {
+//     console.log(`监听到属性${property}改变为${v}`)
+//   },
+//   (target, property) => {
+//     console.log(`'${property}' = ${target[property]}`)
+//   }
+// )
+// p.a = 2 // 监听到属性a改变
+// p.a // 'a' = 2
