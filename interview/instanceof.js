@@ -17,7 +17,10 @@ function myInstanceof(self, target) {
   // 取到目标类型的原型
   const prototype = target.prototype
   // 取到被验证的原型
-  let proto = self.__proto__
+  // let proto = self.__proto__
+  // // 可优化为
+  let proto = Object.getPrototypeOf(self)
+  
   while (true) {
     // null | undefined, 原型的尽头是 null
     if (!proto) {
@@ -26,7 +29,9 @@ function myInstanceof(self, target) {
       return true
     }
     // 当前循环次上述条件都不符合就继续判断它的原型的原型，直到找到或者原型不存在(找到头了)
-    proto = proto.__proto__
+    // proto = proto.__proto__
+    // 可优化为
+    proto = Object.getPrototypeOf(proto)
   }
 }
 
