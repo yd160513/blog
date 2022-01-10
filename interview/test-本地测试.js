@@ -2607,18 +2607,51 @@ function repeat(num, con) {
 // console.log(max(1, 2, 3, 99, 20, 10, 30))
 
 // 手写 flat 函数 - 将多维数组转换为一维数组
-function myFlat(arr) {
-  const isDeep = arr.some(item => item instanceof Array)
-  if (!isDeep) return arr
-  const res = Array.prototype.concat.apply([], arr)
-  return myFlat(res)
-}
-const testArr = [
-  1, 2, 3, 4, 5,
-  [9, 0, 88, 99],
-  [
-    11, 22, 33, 44,
-    [555, 444, 44444, 22222]
-  ]
-]
-console.log(myFlat(testArr))
+// function myFlat(arr) {
+//   const isDeep = arr.some(item => item instanceof Array)
+//   if (!isDeep) return arr
+//   const res = Array.prototype.concat.apply([], arr)
+//   return myFlat(res)
+// }
+// const testArr = [
+//   1, 2, 3, 4, 5,
+//   [9, 0, 88, 99],
+//   [
+//     11, 22, 33, 44,
+//     [555, 444, 44444, 22222]
+//   ]
+// ]
+// console.log(myFlat(testArr))
+
+// 通过 constructor 判断类型
+// 正常情况下
+// console.log((2).constructor === Number) // true
+// console.log((true).constructor === Boolean) // true
+// console.log(('str').constructor === String) // true
+// console.log(([]).constructor === Array) // true
+// console.log((function() {}).constructor === Function) // true
+// console.log(({}).constructor === Object) // true
+// prototype 属性被更改
+// function Fn() {}
+// Fn.prototype = new Array()
+// const f = new Fn()
+// console.log(f.constructor === Fn) // false
+// console.log(f.constructor === Array) // true
+
+// 判断数组的方式
+// console.log(Object.prototype.toString.call([]) === '[object Array]') // true
+// console.log([].__proto__ === Array.prototype) // true
+// console.log(Array.isArray([])) // true
+// console.log([] instanceof Array) // true
+// console.log(Array.prototype.isPrototypeOf([])) // true
+
+// isNaN 和 Number.isNaN 的区别
+console.log(isNaN('123')) // false
+console.log(isNaN('aaa')) // true
+console.log(isNaN({})) // true
+console.log(isNaN(NaN)) // true
+console.log('--')
+console.log(Number.isNaN('123')) // false
+console.log(Number.isNaN('aaa')) // false
+console.log(Number.isNaN({})) // false
+console.log(Number.isNaN(NaN)) // true
