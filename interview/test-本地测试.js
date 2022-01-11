@@ -2707,3 +2707,31 @@ function repeat(num, con) {
 // )
 // p.a = 2 // 监听到属性a改变
 // p.a // 'a' = 2
+
+// Object.is() 和 === 的区别
+// console.log(NaN === NaN) // false
+// console.log(Object.is(NaN, NaN)) // true
+// console.log(-0 === +0) // true
+// console.log(Object.is(-0, +0)) // false
+
+// 包装类型
+// const a = 'abc'
+// const objA = Object(a)
+// console.log(objA) // String ('abc')
+// console.log(typeof objA) // object
+// const _a = objA.valueOf()
+// console.log(_a) // abc
+// console.log(typeof _a) // string
+// // console.log(a.length) // 3
+// // console.log(a.toLocaleUpperCase()) // ABC
+
+// 遍历类数组对象
+let obj = {
+  0:'one',
+  1:'two',
+  length: 2
+};
+obj = Array.from(obj);
+for(const k of obj){
+  console.log(k)
+}
