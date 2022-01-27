@@ -2726,12 +2726,114 @@ function repeat(num, con) {
 // // console.log(a.toLocaleUpperCase()) // ABC
 
 // 遍历类数组对象
-let obj = {
-  0:'one',
-  1:'two',
-  length: 2
-};
-obj = Array.from(obj);
-for(const k of obj){
-  console.log(k)
-}
+// let obj = {
+//   0:'one',
+//   1:'two',
+//   length: 2
+// };
+// obj = Array.from(obj);
+// for(const k of obj){
+//   console.log(k)
+// }
+
+// const promise = new Promise((resolve, reject) => {
+//   resolve('success1');
+//   reject('error');
+//   resolve('success2');
+// });
+// promise.then((res) => {
+//   console.log('then:', res);
+// }).catch((err) => {
+//   console.log('catch:', err);
+// })
+// /**
+//  * then:success1
+//  */
+
+// Promise.resolve(1)
+//   .then(2)
+//   .then(Promise.resolve(3))
+//   .then(console.log)
+// /**
+//  * 1 // then() 如果接收的不是一个函数，则会将前一个 promise 的结果透传下去
+//  */
+
+// const promise1 = new Promise((resolve, reject) => {
+//   setTimeout(() => {
+//     resolve('success')
+//   }, 1000)
+// })
+// const promise2 = promise1.then(() => {
+//   throw new Error('error!!!')
+// })
+// console.log('promise1', promise1)
+// console.log('promise2', promise2)
+// setTimeout(() => {
+//   console.log('promise1', promise1)
+//   console.log('promise2', promise2)
+// }, 2000)
+// /**
+//  * pending
+//  * pending
+//  * error!!!
+//  */
+
+// Promise.resolve(1)
+//   .then(res => {
+//     console.log(res);
+//     return 2;
+//   })
+//   .catch(err => {
+//     return 3;
+//   })
+//   .then(res => {
+//     console.log(res);
+//   });
+//   /**
+//    * 1
+//    * 2
+//    */
+
+// Promise.resolve().then(() => {
+//   return new Error('error!!!')
+// }).then(res => {
+//   console.log("then: ", res)
+// }).catch(err => {
+//   console.log("catch: ", err)
+// })
+// /**
+//  * then: error!!! // 因为是 return，如果是 throw 则会进入 catch
+//  */
+
+// const promise = Promise.resolve().then(() => {
+//   return promise;
+// })
+// promise.catch(console.err)
+// /**
+//  * 直接报错，因为在 .then() 和 .catch() 中不能 return 自身。会直接报错，并不会被 catch 捕获
+//  */
+
+// Promise.resolve(1)
+//   .then(2)
+//   .then(Promise.resolve(3))
+//   .then(console.log)
+// /**
+//  * 1 // then() 方法接收到的如果不是函数，则会将前一个 promise 的结果透传下去
+//  */
+
+Promise.resolve('err!!!')
+  .then((res) => {
+    console.log('success', res)
+  }, (err) => {
+    console.log('error', err)
+    throw new Error('111')
+  }).catch(err => {
+    console.log('catch', err)
+  })
+/**
+ * error err!!!
+ * 题解: 
+ * then() 方法接受两个函数，第一个函数是成功触发，第二个是失败触发，所以这里被第二个函数捕获，并不会走到 catch() 中。
+ * 但是，基于上述条件，在第二个函数中增加一个 throw new Error('xxx') 这时候就会被 catch() 捕获，
+ * 也就是说，在 then() 的第一个函数中或第二个函数中报错就会被后面的 catch() 捕获。
+ */
