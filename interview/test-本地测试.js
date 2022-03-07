@@ -2837,3 +2837,676 @@ Promise.resolve('err!!!')
  * 但是，基于上述条件，在第二个函数中增加一个 throw new Error('xxx') 这时候就会被 catch() 捕获，
  * 也就是说，在 then() 的第一个函数中或第二个函数中报错就会被后面的 catch() 捕获。
  */
+
+// ------------------------------------------------
+// function handle (i) {
+//   if (i <= 2) return 1
+//   return handle(i - 1) + handle(i - 2)
+// }
+
+// function test1(len) {
+//   let ref = ``
+//   for (var i = 1; i <= len; i++) {
+//     ref = `${ref} ${handle(i)}`
+//   }
+//   return ref
+// }
+// console.log('tetst', test1(9))
+
+// const str = `123321`
+// const handle = (str) => {
+//   if (!str) return true
+//   let start = 0
+//   let end = str.length - 1
+//   while (start <= end) {
+//     if (str[start] === str[end]){
+//       ++start
+//       --end
+//     } else {
+//       return false
+//     }
+//   }
+//   return true
+// }
+// console.log(handle(str))
+
+// const str = `123321`
+// const handle = (str) => {
+//   const arr = Array.prototype.slice.call(str)
+//   const set = new Set(arr)
+//   return [...set].join('')
+// }
+// console.log(handle(str))
+
+// const handle = (arr, len) => {
+//   const result = []
+//   let index = 0
+//   while(arr.length) {
+//     const item = arr.shift()
+//     if (!result[index]) {
+//       result[index] = []
+//     } else if (result[index].length === len) {
+//       ++index
+//       result[index] = []
+//     }
+//     result[index].push(item)
+//   }
+//   return result
+// }
+
+// console.log(handle([1, 2, 3, 4, 5, 6, 7, 8, 9], 4))
+
+// const a = () => {
+//   console.log('红灯')
+// }
+// const b = () => {
+//   console.log('绿灯')
+// }
+// const c = () => {
+//   console.log('黄灯')
+// }
+
+// const handle = (cb, timer) => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       cb()
+//       resolve()
+//     }, timer)
+//   })
+// }
+
+// const test = async () => {
+//   await handle(a, 1000)
+//   await handle(b, 2000)
+//   await handle(c, 3000)
+//   test()
+// }
+// test()
+
+
+// function repeat(num) {
+//   let count = 1
+//   function handle() {
+//     setTimeout(() => {
+//       if (count <= 4) {
+//         console.log(`第${count}次`)
+//         if (count === num) {
+//           console.log('hello world')
+//         }
+//         count++
+//         handle()
+//       }
+//     }, 500)
+//   }
+//   handle()
+// }
+// repeat(3)
+
+// const arr = [1, 1, 3, 4, 5, 6, 3, 2, 5, 5, 6, 6, 7, 9, 10]
+// // const handle = (arr) => {
+// //   return [...new Set(arr)]
+// // }
+// const handle = (arr) => {
+//   const result = arr.reduce((prevVal, currVal) => {
+//     if (!prevVal.includes(currVal)) {
+//       prevVal.push(currVal)
+//     }
+//     return prevVal
+//   }, [])
+//   return result
+// }
+// console.log(handle(arr))
+
+// const str = '213738439137284321999373333337996273339983'
+// const handle = (str) => {
+//   const arr = str.split('')
+//   let max = 0
+//   let value 
+//   arr.forEach(item => {
+//     const count = str.split(item).length - 1
+//     if (max < count) {
+//       max = count
+//       value = item
+//     }
+//   })
+//   return {
+//     max,
+//     value
+//   }
+// }
+// console.log(handle(str))
+
+// async function fn() {
+//   return 100
+// }
+
+// (async function () {
+//   const a = fn() // ? => pending 状态的 promise 对应值为 100
+//   console.log('a', a)
+//   const b = await fn() // ? => 100
+//   console.log('b', b)
+// })()
+
+// (async function() {
+//   console.log('start')
+//   const a = await 100
+//   console.log('a', a)
+//   const b = await Promise.resolve(200)
+//   console.log('b', b)
+//   const c = await Promise.reject(300)
+//   console.log('c', c)
+//   console.log('end')
+// })()
+
+// const promise1 = new Promise((resolve, reject) => {
+//   console.log('promise1')
+//   resolve('resolve1')
+// })
+// const promise2 = promise1.then(res => {
+//   console.log(res)
+// })
+// setTimeout(() => {
+//   console.log(promise2)
+// }, 0)
+// console.log('1', promise1); // resolve 状态的 resolve1
+// console.log('2', promise2); // pending 状态
+
+// async function async1 () {
+//   console.log('async1 start');
+//   await new Promise(resolve => {
+//     console.log('promise1') // 这里属于是同步任务并不会触发 await 的等待， await 等待的是 resolve() 的结果
+//     resolve('promise1 resolve')
+//   }).then(res => console.log(res))
+//   console.log('async1 success');
+//   return 'async1 end'
+// }
+// console.log('script start')
+// async1().then(res => console.log(res))
+// console.log('script end')
+
+
+// script start
+// async1 start
+// promise1
+// script end
+// promise1 resolve
+// async1 success
+// async1 end
+
+// async function async1() {
+//   console.log("async1 start");
+//   await async2();
+//   console.log("async1 end");
+// }
+
+// async function async2() {
+//   console.log("async2");
+// }
+
+// console.log("script start");
+
+// setTimeout(function() {
+//   console.log("setTimeout");
+// }, 0);
+
+// async1();
+
+// new Promise(resolve => {
+//   console.log("promise1");
+//   resolve();
+// }).then(function() {
+//   console.log("promise2");
+// });
+// console.log('script end')
+
+// script start
+// async1 start
+// async2
+// promise1
+// script end
+// async1 end
+// promise2
+// setTimeout
+
+// const first = () => (new Promise((resolve, reject) => {
+//   console.log(3);
+//   let p = new Promise((resolve, reject) => {
+//       console.log(7);
+//       setTimeout(() => {
+//           console.log(5);
+//           resolve(6);
+//           console.log(p)
+//       }, 0)
+//       resolve(1);
+//   });
+//   resolve(2);
+//   p.then((arg) => { // 微任务队列
+//       console.log(arg);
+//   });
+// }));
+// first().then((arg) => { // 微任务队列
+//   console.log(arg);
+// });
+// console.log(4);
+// 3
+// 7
+// 4
+// 1
+// 2
+
+
+// const async1 = async () => {
+//   console.log('async1');
+//   setTimeout(() => {
+//     console.log('timer1')
+//   }, 2000)
+//   await new Promise(resolve => {
+//     console.log('promise1')
+//   })
+//   console.log('async1 end')
+//   return 'async1 success'
+// } 
+// console.log('script start');
+// async1().then(res => console.log(res));
+// console.log('script end');
+// Promise.resolve(1)
+//   .then(2)
+//   .then(Promise.resolve(3))
+//   .catch(4)
+//   .then(res => console.log(res))
+// setTimeout(() => {
+//   console.log('timer2')
+// }, 1000)
+
+// script start
+// async1
+// promise1
+// script end
+// 1
+// timer2
+// timer1
+
+
+// const p1 = new Promise((resolve) => {
+//   setTimeout(() => {
+//     resolve('resolve3');
+//     console.log('timer1')
+//   }, 0)
+//   resolve('resolve1');
+//   resolve('resolve2');
+// }).then(res => {
+//   console.log(res)
+//   setTimeout(() => {
+//     console.log(p1)
+//   }, 1000)
+// }).finally(res => {
+//   console.log('finally', res)
+// })
+// resolve1
+// finally undefined
+// timer1
+// resolved promise
+
+
+
+
+
+
+
+
+
+// console.log('1');
+
+// setTimeout(function() {
+//   console.log('2');
+//   process.nextTick(function() {
+//       console.log('3');
+//   })
+//   new Promise(function(resolve) {
+//       console.log('4');
+//       resolve();
+//   }).then(function() {
+//       console.log('5')
+//   })
+// })
+// process.nextTick(function() {
+//   console.log('6');
+// })
+// new Promise(function(resolve) {
+//   console.log('7');
+//   resolve();
+// }).then(function() {
+//   console.log('8')
+// })
+
+// setTimeout(function() {
+//   console.log('9');
+//   process.nextTick(function() {
+//       console.log('10');
+//   })
+//   new Promise(function(resolve) {
+//       console.log('11');
+//       resolve();
+//   }).then(function() {
+//       console.log('12')
+//   })
+// })
+
+
+// 1 
+// 7
+// 6
+// 8
+// 2
+// 4
+// 3
+// 5
+// 9
+// 11
+// 10
+// 12
+
+
+
+// console.log(1)
+
+// setTimeout(() => {
+//   console.log(2)
+// })
+
+// new Promise(resolve =>  {
+//   console.log(3)
+//   resolve(4)
+// }).then(d => console.log(d))
+
+// setTimeout(() => {
+//   console.log(5)
+//   new Promise(resolve =>  {
+//     resolve(6)
+//   }).then(d => console.log(d))
+// })
+
+// setTimeout(() => {
+//   console.log(7)
+// })
+
+// console.log(8)
+
+
+// 1
+// 3
+// 8
+// 4
+// 2
+// 5
+// 6
+// 7
+
+
+
+// console.log(1);
+    
+// setTimeout(() => {
+//   console.log(2);
+//   Promise.resolve().then(() => {
+//     console.log(3)
+//   });
+// });
+
+// new Promise((resolve, reject) => {
+//   console.log(4)
+//   resolve(5)
+// }).then((data) => {
+//   console.log(data);
+// })
+
+// setTimeout(() => {
+//   console.log(6);
+// })
+
+// console.log(7);
+
+
+// 1
+// 4
+// 7
+// 5
+// 2
+// 3
+// 6
+
+
+
+
+//  Promise.resolve().then(() => {
+//     console.log('1');
+//     throw 'Error';
+//   }).then(() => {
+//     console.log('2');
+//   }).catch(() => {
+//     console.log('3');
+//     throw 'Error';
+//   }).then(() => {
+//     console.log('4');
+//   }).catch(() => {
+//     console.log('5');
+//   }).then(() => {
+//     console.log('6');
+//   });
+
+// 1
+// 3
+// 5
+// 6
+
+
+// const arr = [1, 1, 1, 1, 1, 3, 3, 4, 2, 5, 8, 9, 1, 3, 4, 1, 2, 2, 2, 9]
+// // 统计数组中每个元素出现的次数
+// const res = arr.reduce((count, cur) => {
+//   count[cur] ? count[cur]++ : count[cur] = 1
+//   return count
+// }, {})
+// console.log(res)
+
+
+// let res = ''
+// const str = '1234567890'
+// for (let index = str.length - 1; index >= 0; index--) {
+//   const element = str[index];
+//   res += element
+// }
+// console.log(res)
+
+
+// const handle = (...args) => {
+//   const fn = handle.bind(null, ...args);
+//   fn.toString = () => {
+//     return args.reduce((prevVal, currVal) => prevVal + currVal, 0)
+//   }
+//   return fn
+// }
+// console.log(handle(1, 2, 3, 4, 5, 1, 2, 4, 5, 3).toString())
+
+Function.prototype.myApply = function(ctx) {
+  ctx = ctx || global
+  const args = [...arguments][1]
+  const fn = Symbol()
+  ctx[fn] = this
+  let res
+  if (args) {
+    res = ctx[fn](...args)
+  } else {
+    res = ctx[fn]()
+  }
+  delete ctx[fn]
+  return res
+}
+
+Function.prototype.myCall = function(ctx) {
+  ctx = ctx || global
+  const fn = Symbol()
+  ctx[fn] = this
+  const args = [...arguments].slice(1)
+  let res
+  if (args) {
+    res = ctx[fn](...args)
+  } else {
+    res = ctx[fn]()
+  }
+  delete ctx[fn]
+  return res
+}
+
+function sum(...args) {
+  return this.prefix + (args.reduce((prevValue, currValue) => prevValue + currValue, 0))
+}
+
+Function.prototype.myBind = function(ctx) {
+  ctx = ctx || global
+  const _self = this
+  const outArgs = [...arguments].slice(1)
+  const innerFn = function (...args) {
+    return _self.call(
+      this instanceof innerFn ? this : ctx,
+      ...outArgs,
+      ...args
+    )
+  }
+  innerFn.prototype = Object.create(_self.prototype)
+  return innerFn
+}
+
+let obj = {
+  prefix: `$`
+}
+let bindSum = sum.myBind(obj, 1, 2, 3)
+console.log(bindSum(4, 5))
+
+// global.a = 2
+// var a = 2
+// function fn() {
+//   console.log(this.a)
+// }
+
+
+// const obj = {
+//   a: 1
+// }
+
+// // 调用方式
+// fn()
+// fn.myApply(obj)
+// fn.myCall(obj)
+
+
+
+
+// const handle = (obj) => {
+//   if (!obj || typeof obj !== 'object') return
+//   const res = Array.isArray(obj) ? [] : {}
+//   for (const key in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       res[key] = typeof obj[key] === 'object' ? handle(obj[key]) : obj[key]
+//     }
+//   }
+//   return res
+// }
+
+// const deepCloneObj1 = {
+//   a: 1,
+//   b: 2,
+//   c: {
+//     q: 1,
+//     w: 2,
+//     e: 3,
+//     r: [1, 2, 3]
+//   }
+// }
+// const deepCloneObj2 = handle(deepCloneObj1)
+// deepCloneObj2.c.q = 2222
+// console.log(deepCloneObj)
+// console.log(deepCloneObj2)
+
+
+
+// const handle = (arr) => {
+//   const hasArr = arr.some(item => Array.isArray(item))
+//   if (!hasArr) return arr
+//   const res = Array.prototype.concat.apply([], arr)
+//   return handle(res)
+// }
+// const arr1111111 = [1, 2, 3, [5, 6, 7, [8, 9, 0, 10, 11, [12, 13, 14, 15]]]]
+// console.log(handle(arr1111111))
+
+
+
+// function myInstanceof(left, right) {
+//   let prototype = left.__proto__
+//   const _proto_ = right.prototype
+//   while (true) {
+//     if (!prototype) {
+//       return false
+//     } else if (prototype === _proto_) {
+//       return true
+//     }
+//     prototype = prototype._proto_
+//   }
+// }
+// console.log(myInstanceof(123, Array))
+
+
+
+// function myNew(func) {
+//   const obj = {}
+//   const args = Array.prototype.slice(arguments, 1)
+//   const res = func.apply(obj, args)
+//   return typeof res === 'object' && res !== null ? res : obj
+// }
+
+
+
+/**
+ * 多次触发只会最后一次管用
+ */
+function fd (cb, delay) {
+  let timer = null
+  return () => {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      cb()
+    }, delay)
+  }
+}
+
+/**
+ * 节流
+ */
+function jl (cb, delay) {
+  let timer = null
+  return () => {
+    if (!timer) {
+      timer = setTimeout(() => {
+        timer = null
+        cb()
+      }, delay)
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

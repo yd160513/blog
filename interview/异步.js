@@ -33,7 +33,7 @@
 //   console.log('b', b)
 // })()
 
-// // ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 // (async function() {
 //   console.log('start')
 //   const a = await 100
@@ -45,7 +45,7 @@
 //   console.log('end')
 // })() // 执行完毕，打印出哪些内容？ => start 100 200 报错
 
-// // ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 // async function async1() {
 //   console.log('async1 start') // 2
 //   await async2() // resolve(Promise.resolve())
@@ -76,7 +76,7 @@
 // //    我给的答案: 'script start' 'async1 start' async2 promise1 'script end' 'async1 end' promise2 setTimeout (错在了 async1 end 和 promise2 的顺序)
 // //    正确答案: 'script start' 'async1 start' async2 promise1 'script end' promise2 'async1 end' setTimeout
 
-// // ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
 // console.log('script start') // 1
 
 // async function async1() {
@@ -189,7 +189,7 @@
  * promise1
  * 1 Promise { 'resolve1' }
  * 2 Promise { <pending> } // pending 是因为 then 是一个微任务
- * promise1
+ * resolve1
  * 问题: 什么时候获取 promise2 就是会一个完成状态? 
  * 答: 当 promise2 的 then 执行完毕之后，可以在 setTimeout 中获取其状态
  */
@@ -531,25 +531,25 @@
  */
 
 // 19.
-// async function async1() {
-//   console.log("async1 start");
-//   await async2(); // 这里的 await 只会等待 async2 中的同步任务，并不会等待异步任务的结果
-//   console.log("async1 end");
-//   setTimeout(() => {
-//     console.log('timer1')
-//   }, 0)
-// }
-// async function async2() {
-//   setTimeout(() => {
-//     console.log('timer2')
-//   }, 0)
-//   console.log("async2");
-// }
-// async1();
-// setTimeout(() => {
-//   console.log('timer3')
-// }, 0)
-// console.log("start")
+async function async1() {
+  console.log("async1 start");
+  await async2(); // 这里的 await 只会等待 async2 中的同步任务，并不会等待异步任务的结果
+  console.log("async1 end");
+  setTimeout(() => {
+    console.log('timer1')
+  }, 0)
+}
+async function async2() {
+  setTimeout(() => {
+    console.log('timer2')
+  }, 0)
+  console.log("async2");
+}
+async1();
+setTimeout(() => {
+  console.log('timer3')
+}, 0)
+console.log("start")
 /**
  * async1 start
  * async2
@@ -904,21 +904,21 @@
  */
 
 // 30.
-Promise.resolve().then(() => {
-  console.log('1');
-  throw 'Error';
-}).then(() => {
-  console.log('2');
-}).catch(() => {
-  console.log('3');
-  throw 'Error';
-}).then(() => {
-  console.log('4');
-}).catch(() => {
-  console.log('5');
-}).then(() => {
-  console.log('6');
-});
+// Promise.resolve().then(() => {
+//   console.log('1');
+//   throw 'Error';
+// }).then(() => {
+//   console.log('2');
+// }).catch(() => {
+//   console.log('3');
+//   throw 'Error';
+// }).then(() => {
+//   console.log('4');
+// }).catch(() => {
+//   console.log('5');
+// }).then(() => {
+//   console.log('6');
+// });
 /**
  * 1
  * 3
