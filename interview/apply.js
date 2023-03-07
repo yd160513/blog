@@ -28,8 +28,9 @@ Function.prototype.myApply = function(context) {
 // 所以，当在全局环境下定义 var a = 1， 然后在函数中通过 this.a 访问 a 是访问不到的，会返回 undefined
 global.a = 2
 var a = 2
-function fn() {
+function fn(a, b, c) {
   console.log(this.a)
+  console.log(a, b, c)
 }
 
 
@@ -39,7 +40,8 @@ const obj = {
 
 // 调用方式
 fn()
-fn.myApply(obj)
+// fn.myApply(obj, [3, 4, 5])
+fn.myApply(obj, 3)
 
 const arr = [1, 2, 3, [5, 6, 7]]
 const arr2 = []

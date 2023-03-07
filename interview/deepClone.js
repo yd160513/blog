@@ -1,32 +1,32 @@
 // 第一版: 基础版
-function deepClone(obj) {
-  if (!obj || typeof obj !== 'object') return obj
-  const result = Array.isArray(obj) ? [] : {}
-  for (const key in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      result[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
-    }
-  }
-  return result
-}
+// function deepClone(obj) {
+//   if (!obj || typeof obj !== 'object') return obj
+//   const result = Array.isArray(obj) ? [] : {}
+//   for (const key in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       result[key] = typeof obj[key] === 'object' ? deepClone(obj[key]) : obj[key]
+//     }
+//   }
+//   return result
+// }
 
 // 第二版: 解决了循环引用
 // 这里的 map 是用来解决循环引用的，map 用来存放所有被处理过的对象，当再次循环一个已经被循环过的对象的时候，则直接将 map 中对应的对象 return 出去即可。
-function deepClone(obj, map = new Map()) {
-  if (!obj || typeof obj !== 'object') return obj
-  // 如果 map 中可以获取到对象，则说明之前处理过，则直接 return map 中的对象。这样可以解决循环引用的问题
-  // 不可以将 return map.get(obj) 改为 return obj，因为在向 map 中存的时候是一个全新的对象，如果这里使用了 obj，这样就成了和原始对象引用的是同一个对象了
-  if (map.get(obj)) return map.get(obj)
-  const result = Array.isArray(obj) ? [] : {}
-  // 将新的对象存到 map 中，key 是原始对象，存起来的这个对象是一个全新的，不可以将原始对象存储到 map 中，否则在后边用的时候还是和原始对象是同一个引用。
-  map.set(obj, result)
-  for (const key in obj) {
-    if (Object.hasOwnProperty.call(obj, key)) {
-      result[key] = typeof obj[key] === 'object' ? deepClone(obj[key], map) : obj[key]
-    }
-  }
-  return result
-}
+// function deepClone(obj, map = new Map()) {
+//   if (!obj || typeof obj !== 'object') return obj
+//   // 如果 map 中可以获取到对象，则说明之前处理过，则直接 return map 中的对象。这样可以解决循环引用的问题
+//   // 不可以将 return map.get(obj) 改为 return obj，因为在向 map 中存的时候是一个全新的对象，如果这里使用了 obj，这样就成了和原始对象引用的是同一个对象了
+//   if (map.get(obj)) return map.get(obj)
+//   const result = Array.isArray(obj) ? [] : {}
+//   // 将新的对象存到 map 中，key 是原始对象，存起来的这个对象是一个全新的，不可以将原始对象存储到 map 中，否则在后边用的时候还是和原始对象是同一个引用。
+//   map.set(obj, result)
+//   for (const key in obj) {
+//     if (Object.hasOwnProperty.call(obj, key)) {
+//       result[key] = typeof obj[key] === 'object' ? deepClone(obj[key], map) : obj[key]
+//     }
+//   }
+//   return result
+// }
 
 const deepCloneObj = {
   a: 1,
@@ -201,5 +201,5 @@ function clone(source, _map = new Map) {
   return target
 }
 
-const obj2 = clone(obj)
-console.log(obj2)
+// const obj2 = clone(obj)
+// console.log(obj2)

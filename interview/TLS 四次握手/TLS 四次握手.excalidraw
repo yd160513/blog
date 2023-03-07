@@ -23,38 +23,10 @@
       "height": 831.8754763192666,
       "seed": 1677774290,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [
         {
-          "id": "UoYwuqo0jDq0EVQyhZIck",
-          "type": "arrow"
-        },
-        {
-          "id": "WNWqZMa0CWiT_z8GCQcDq",
-          "type": "arrow"
-        },
-        {
-          "id": "5uAMyv207Dcgbf5MpOEk1",
-          "type": "arrow"
-        },
-        {
           "id": "lWefb6nTIzy-XMdwn7EWj",
-          "type": "arrow"
-        },
-        {
-          "id": "9Na7tWw-xXefmpedyYAP0",
-          "type": "arrow"
-        },
-        {
-          "id": "c_raMhTeAevGYWSzG4kYS",
-          "type": "arrow"
-        },
-        {
-          "id": "L5oqaxEnP756L47Rl2oZU",
-          "type": "arrow"
-        },
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
           "type": "arrow"
         },
         {
@@ -78,12 +50,14 @@
           "type": "arrow"
         }
       ],
-      "updated": 1642044781473
+      "updated": 1642044781473,
+      "link": null,
+      "locked": false
     },
     {
       "type": "text",
-      "version": 251,
-      "versionNonce": 1220933425,
+      "version": 252,
+      "versionNonce": 1060873552,
       "isDeleted": false,
       "id": "38qWHCKibC9BgTAolZUky",
       "fillStyle": "solid",
@@ -92,17 +66,19 @@
       "roughness": 2,
       "opacity": 100,
       "angle": 0,
-      "x": -636.8796714353355,
+      "x": -637.3796714353355,
       "y": -588.4195614578623,
       "strokeColor": "#000000",
       "backgroundColor": "#ced4da",
-      "width": 61,
+      "width": 62,
       "height": 28,
       "seed": 712738450,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [],
-      "updated": 1642044524387,
+      "updated": 1676245347525,
+      "link": null,
+      "locked": false,
       "fontSize": 20,
       "fontFamily": 3,
       "text": "客户端",
@@ -132,38 +108,10 @@
       "height": 826.2153200692665,
       "seed": 771850062,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [
         {
-          "id": "UoYwuqo0jDq0EVQyhZIck",
-          "type": "arrow"
-        },
-        {
-          "id": "WNWqZMa0CWiT_z8GCQcDq",
-          "type": "arrow"
-        },
-        {
-          "id": "5uAMyv207Dcgbf5MpOEk1",
-          "type": "arrow"
-        },
-        {
           "id": "lWefb6nTIzy-XMdwn7EWj",
-          "type": "arrow"
-        },
-        {
-          "id": "9Na7tWw-xXefmpedyYAP0",
-          "type": "arrow"
-        },
-        {
-          "id": "c_raMhTeAevGYWSzG4kYS",
-          "type": "arrow"
-        },
-        {
-          "id": "L5oqaxEnP756L47Rl2oZU",
-          "type": "arrow"
-        },
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
           "type": "arrow"
         },
         {
@@ -187,12 +135,14 @@
           "type": "arrow"
         }
       ],
-      "updated": 1642044781934
+      "updated": 1642044781934,
+      "link": null,
+      "locked": false
     },
     {
       "type": "text",
-      "version": 508,
-      "versionNonce": 1614932241,
+      "version": 509,
+      "versionNonce": 532158384,
       "isDeleted": false,
       "id": "dgdPeVJCP5nJ1dYXgYadt",
       "fillStyle": "solid",
@@ -201,17 +151,19 @@
       "roughness": 2,
       "opacity": 100,
       "angle": 0,
-      "x": 343.85576890557314,
+      "x": 343.35576890557314,
       "y": -588.4195614578623,
       "strokeColor": "#000000",
       "backgroundColor": "#ced4da",
-      "width": 61,
+      "width": 62,
       "height": 28,
       "seed": 1280533650,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [],
-      "updated": 1642044524387,
+      "updated": 1676245347525,
+      "link": null,
+      "locked": false,
       "fontSize": 20,
       "fontFamily": 3,
       "text": "服务端",
@@ -241,9 +193,13 @@
       "height": 4.13791723757646,
       "seed": 668417751,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044524387,
+      "link": null,
+      "locked": false,
       "startBinding": {
         "elementId": "96WWPzIHRiyqvbs4qUNBu",
         "focus": -0.7652193305172871,
@@ -270,8 +226,8 @@
     },
     {
       "type": "text",
-      "version": 743,
-      "versionNonce": 518113759,
+      "version": 744,
+      "versionNonce": 1765440336,
       "isDeleted": false,
       "id": "u7vrqqZiN5Nurr-IDQ7pV",
       "fillStyle": "solid",
@@ -280,17 +236,19 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 6.2805966923672685,
-      "x": -365.66100041430036,
-      "y": -520.0502738012606,
+      "x": -365.6610020895311,
+      "y": -520.0515681072212,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
-      "width": 372,
+      "width": 373,
       "height": 23,
       "seed": 1429784185,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [],
-      "updated": 1642045149808,
+      "updated": 1676245347525,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "1.随机字符串A; 2.TLS 协议版本; 3.支持的加密算法",
@@ -302,8 +260,8 @@
     },
     {
       "type": "text",
-      "version": 731,
-      "versionNonce": 856321393,
+      "version": 740,
+      "versionNonce": 663504304,
       "isDeleted": false,
       "id": "eXCXcDUwgj8sb0fXUgSIs",
       "fillStyle": "solid",
@@ -312,30 +270,27 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 6.262568750046614,
-      "x": -397.0925678687366,
-      "y": -397.4031941679982,
+      "x": -397.09267412557995,
+      "y": -397.4135017163376,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
-      "width": 441,
+      "width": 442,
       "height": 23,
       "seed": 1294036857,
       "groupIds": [],
-      "strokeSharpness": "sharp",
-      "boundElements": [
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
-          "type": "arrow"
-        }
-      ],
-      "updated": 1642045149808,
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1676245361954,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
-      "text": "1.随机字符串B; 2.确定采用的加密算法; 3.数组证书(包含公钥)",
+      "text": "1.随机字符串B; 2.确定采用的加密算法; 3.数字证书(包含公钥)",
       "baseline": 17,
       "textAlign": "left",
       "verticalAlign": "top",
       "containerId": null,
-      "originalText": "1.随机字符串B; 2.确定采用的加密算法; 3.数组证书(包含公钥)"
+      "originalText": "1.随机字符串B; 2.确定采用的加密算法; 3.数字证书(包含公钥)"
     },
     {
       "type": "line",
@@ -357,9 +312,13 @@
       "height": 212.39033200456603,
       "seed": 581635287,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044555362,
+      "link": null,
+      "locked": false,
       "startBinding": null,
       "endBinding": null,
       "lastCommittedPoint": null,
@@ -378,8 +337,8 @@
     },
     {
       "type": "text",
-      "version": 676,
-      "versionNonce": 29001745,
+      "version": 677,
+      "versionNonce": 1492029776,
       "isDeleted": false,
       "id": "5jZGsxFplcjpRb2mPQC9T",
       "fillStyle": "solid",
@@ -392,11 +351,11 @@
       "y": -296.2113739125451,
       "strokeColor": "#c92a2a",
       "backgroundColor": "transparent",
-      "width": 159,
+      "width": 160,
       "height": 115,
       "seed": 754844791,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [
         {
           "id": "bkUFkvzKrY4e3m3lr9PH2",
@@ -405,13 +364,11 @@
         {
           "id": "lWefb6nTIzy-XMdwn7EWj",
           "type": "arrow"
-        },
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
-          "type": "arrow"
         }
       ],
-      "updated": 1642045224231,
+      "updated": 1676245347525,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "1.解析证书拿到公钥\n2.创建随机字符串C\n3.公钥加密字符串C\n4.创建前面所有内容的\n  hash 供服务器校验",
@@ -441,9 +398,13 @@
       "height": 138.97696058869826,
       "seed": 63860087,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044608482,
+      "link": null,
+      "locked": false,
       "startBinding": null,
       "endBinding": null,
       "lastCommittedPoint": null,
@@ -462,8 +423,8 @@
     },
     {
       "type": "text",
-      "version": 393,
-      "versionNonce": 995878161,
+      "version": 394,
+      "versionNonce": 1610214320,
       "isDeleted": false,
       "id": "dhQ0PnmrAeuG7mR9p8LgD",
       "fillStyle": "solid",
@@ -476,22 +437,20 @@
       "y": 129.80354996565995,
       "strokeColor": "#2b8a3e",
       "backgroundColor": "transparent",
-      "width": 209,
+      "width": 210,
       "height": 23,
       "seed": 1342082585,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [
-        {
-          "id": "wFtaAr8C4xkKc1QrFjt1F",
-          "type": "arrow"
-        },
         {
           "id": "DuhdZ5RTWXb2Z83a9nivu",
           "type": "arrow"
         }
       ],
-      "updated": 1642045284002,
+      "updated": 1676245347525,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "通信通过共享秘钥来加密数据",
@@ -521,9 +480,13 @@
       "height": 41.956507505294894,
       "seed": 325769081,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044524388,
+      "link": null,
+      "locked": false,
       "startBinding": null,
       "endBinding": null,
       "lastCommittedPoint": null,
@@ -542,8 +505,8 @@
     },
     {
       "type": "text",
-      "version": 168,
-      "versionNonce": 499271121,
+      "version": 169,
+      "versionNonce": 632285008,
       "isDeleted": false,
       "id": "MnWdieE8unNYHHZvkwitt",
       "fillStyle": "solid",
@@ -556,13 +519,15 @@
       "y": -523.3618146176739,
       "strokeColor": "#364fc7",
       "backgroundColor": "transparent",
-      "width": 124,
+      "width": 125,
       "height": 23,
       "seed": 612962425,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [],
-      "updated": 1642045158072,
+      "updated": 1676245347525,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "创建随机字符串A",
@@ -592,9 +557,13 @@
       "height": 100.01778487626626,
       "seed": 1336026999,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044524388,
+      "link": null,
+      "locked": false,
       "startBinding": null,
       "endBinding": null,
       "lastCommittedPoint": null,
@@ -613,8 +582,8 @@
     },
     {
       "type": "text",
-      "version": 394,
-      "versionNonce": 1586402975,
+      "version": 395,
+      "versionNonce": 992015792,
       "isDeleted": false,
       "id": "hKHo-VcTg4mj3bT3mpW_F",
       "fillStyle": "solid",
@@ -627,18 +596,15 @@
       "y": -440.55973128434056,
       "strokeColor": "#c92a2a",
       "backgroundColor": "transparent",
-      "width": 132,
+      "width": 133,
       "height": 46,
       "seed": 435171223,
       "groupIds": [],
-      "strokeSharpness": "sharp",
-      "boundElements": [
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
-          "type": "arrow"
-        }
-      ],
-      "updated": 1642045149811,
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "1.创建随机字符串B\n2.确定加密算法",
@@ -668,9 +634,13 @@
       "height": 203.27463073407546,
       "seed": 1707020791,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044569447,
+      "link": null,
+      "locked": false,
       "startBinding": null,
       "endBinding": null,
       "lastCommittedPoint": null,
@@ -689,8 +659,8 @@
     },
     {
       "type": "text",
-      "version": 242,
-      "versionNonce": 412395281,
+      "version": 243,
+      "versionNonce": 1003912528,
       "isDeleted": false,
       "id": "IWReGNJ9Jr47s8K7jN8vc",
       "fillStyle": "solid",
@@ -703,13 +673,15 @@
       "y": -78.4073875343405,
       "strokeColor": "#0b7285",
       "backgroundColor": "transparent",
-      "width": 160,
+      "width": 161,
       "height": 92,
       "seed": 674821399,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [],
-      "updated": 1642045252368,
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "1.私钥解密数据得到字\n 符串C\n2.创建前面所有内容的\n  hash 供客户端校验",
@@ -739,9 +711,13 @@
       "height": 17.84966867130825,
       "seed": 1918412127,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642045179709,
+      "link": null,
+      "locked": false,
       "startBinding": {
         "elementId": "96WWPzIHRiyqvbs4qUNBu",
         "focus": 0.06803493543836106,
@@ -768,8 +744,8 @@
     },
     {
       "type": "text",
-      "version": 912,
-      "versionNonce": 1409515473,
+      "version": 913,
+      "versionNonce": 1893121968,
       "isDeleted": false,
       "id": "FonWJGSwJAmxzG-Ly--Rj",
       "fillStyle": "solid",
@@ -778,22 +754,19 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0.0008259341504102125,
-      "x": -324.92738595609836,
-      "y": -174.73843933879658,
+      "x": -324.92738612664016,
+      "y": -174.73802637176834,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
-      "width": 227,
+      "width": 228,
       "height": 23,
       "seed": 1135046623,
       "groupIds": [],
-      "strokeSharpness": "sharp",
-      "boundElements": [
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
-          "type": "arrow"
-        }
-      ],
-      "updated": 1642045182015,
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "1.公钥加密后的字符串C; 2.hash",
@@ -823,9 +796,13 @@
       "height": 3.63252562557453,
       "seed": 1620533521,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044576516,
+      "link": null,
+      "locked": false,
       "startBinding": {
         "elementId": "mXH3ZI5PQPwot6BtvuPd_",
         "focus": -0.5888613361182385,
@@ -852,8 +829,8 @@
     },
     {
       "type": "text",
-      "version": 913,
-      "versionNonce": 759731743,
+      "version": 914,
+      "versionNonce": 1018843984,
       "isDeleted": false,
       "id": "UFvwh4GLeGH2bBd-R8cDX",
       "fillStyle": "solid",
@@ -862,22 +839,19 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0.0008259341504102125,
-      "x": -272.14058534182436,
-      "y": 43.63520064261357,
+      "x": -272.14058551236616,
+      "y": 43.63561360964182,
       "strokeColor": "#000000",
       "backgroundColor": "transparent",
-      "width": 56,
+      "width": 57,
       "height": 25,
       "seed": 979295313,
       "groupIds": [],
-      "strokeSharpness": "sharp",
-      "boundElements": [
-        {
-          "id": "Ca1q5YX4Y8gxXLB8Hovu9",
-          "type": "arrow"
-        }
-      ],
-      "updated": 1642044931259,
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 20,
       "fontFamily": 1,
       "text": "1.hash",
@@ -907,9 +881,13 @@
       "height": 3.63252562557453,
       "seed": 1370315633,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044532923,
+      "link": null,
+      "locked": false,
       "startBinding": {
         "elementId": "mXH3ZI5PQPwot6BtvuPd_",
         "focus": 0.47270467167130864,
@@ -954,9 +932,13 @@
       "height": 138.97696058869826,
       "seed": 1718416593,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044616658,
+      "link": null,
+      "locked": false,
       "startBinding": null,
       "endBinding": null,
       "lastCommittedPoint": null,
@@ -974,39 +956,32 @@
       ]
     },
     {
-      "id": "gTmLUgI9YrCDOxj1uv4A4",
       "type": "arrow",
-      "x": -455.97821546942646,
-      "y": 162.27686783019885,
-      "width": 678.8671875,
-      "height": 7.07421875,
-      "angle": 0,
-      "strokeColor": "#2b8a3e",
-      "backgroundColor": "transparent",
+      "version": 201,
+      "versionNonce": 811113009,
+      "isDeleted": false,
+      "id": "gTmLUgI9YrCDOxj1uv4A4",
       "fillStyle": "solid",
       "strokeWidth": 1,
       "strokeStyle": "dashed",
       "roughness": 1,
       "opacity": 100,
-      "groupIds": [],
-      "strokeSharpness": "round",
+      "angle": 0,
+      "x": -455.97821546942646,
+      "y": 162.27686783019885,
+      "strokeColor": "#2b8a3e",
+      "backgroundColor": "transparent",
+      "width": 678.8671875,
+      "height": 7.07421875,
       "seed": 792729375,
-      "version": 201,
-      "versionNonce": 811113009,
-      "isDeleted": false,
-      "boundElements": null,
+      "groupIds": [],
+      "roundness": {
+        "type": 2
+      },
+      "boundElements": [],
       "updated": 1642044821203,
-      "points": [
-        [
-          0,
-          0
-        ],
-        [
-          678.8671875,
-          -7.07421875
-        ]
-      ],
-      "lastCommittedPoint": null,
+      "link": null,
+      "locked": false,
       "startBinding": {
         "elementId": "96WWPzIHRiyqvbs4qUNBu",
         "focus": 0.8054806178422182,
@@ -1017,8 +992,19 @@
         "focus": -0.7952905342806565,
         "gap": 11.482098009150263
       },
+      "lastCommittedPoint": null,
       "startArrowhead": null,
-      "endArrowhead": "arrow"
+      "endArrowhead": "arrow",
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          678.8671875,
+          -7.07421875
+        ]
+      ]
     },
     {
       "type": "arrow",
@@ -1040,9 +1026,13 @@
       "height": 7.07421875,
       "seed": 290510943,
       "groupIds": [],
-      "strokeSharpness": "round",
+      "roundness": {
+        "type": 2
+      },
       "boundElements": [],
       "updated": 1642044825852,
+      "link": null,
+      "locked": false,
       "startBinding": {
         "elementId": "mXH3ZI5PQPwot6BtvuPd_",
         "focus": -0.7936388697916088,
@@ -1068,41 +1058,43 @@
       ]
     },
     {
-      "id": "HUYJtSnAiv6umWW9-XQGN",
       "type": "text",
-      "x": -639.1422779694265,
-      "y": 131.73389908019885,
-      "width": 160,
-      "height": 46,
-      "angle": 0,
-      "strokeColor": "#2b8a3e",
-      "backgroundColor": "transparent",
+      "version": 99,
+      "versionNonce": 1094928816,
+      "isDeleted": false,
+      "id": "HUYJtSnAiv6umWW9-XQGN",
       "fillStyle": "solid",
       "strokeWidth": 1,
       "strokeStyle": "dashed",
       "roughness": 1,
       "opacity": 100,
-      "groupIds": [],
-      "strokeSharpness": "sharp",
+      "angle": 0,
+      "x": -639.1422779694265,
+      "y": 131.73389908019885,
+      "strokeColor": "#2b8a3e",
+      "backgroundColor": "transparent",
+      "width": 161,
+      "height": 46,
       "seed": 209825343,
-      "version": 98,
-      "versionNonce": 1335469727,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1642045259401,
-      "text": "通过字符串 A、B、C \n生成共享秘钥",
+      "groupIds": [],
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
+      "text": "通过字符串 A、B、C \n生成共享秘钥",
+      "baseline": 40,
       "textAlign": "left",
       "verticalAlign": "top",
-      "baseline": 40,
       "containerId": null,
       "originalText": "通过字符串 A、B、C \n生成共享秘钥"
     },
     {
       "type": "text",
-      "version": 164,
-      "versionNonce": 1295046353,
+      "version": 165,
+      "versionNonce": 1588816208,
       "isDeleted": false,
       "id": "aAfvdBQaThfpQgEF7jtnI",
       "fillStyle": "solid",
@@ -1115,13 +1107,15 @@
       "y": 124.41358658019885,
       "strokeColor": "#2b8a3e",
       "backgroundColor": "transparent",
-      "width": 160,
+      "width": 161,
       "height": 46,
       "seed": 349366431,
       "groupIds": [],
-      "strokeSharpness": "sharp",
+      "roundness": null,
       "boundElements": [],
-      "updated": 1642045259402,
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
       "text": "通过字符串 A、B、C \n生成共享秘钥",
@@ -1132,34 +1126,36 @@
       "originalText": "通过字符串 A、B、C \n生成共享秘钥"
     },
     {
-      "id": "k61gvVWYmuqbH2AjIxBRr",
       "type": "text",
-      "x": -306.0895435944268,
-      "y": 168.95655533019885,
-      "width": 209,
-      "height": 23,
-      "angle": 0,
-      "strokeColor": "#2b8a3e",
-      "backgroundColor": "transparent",
+      "version": 68,
+      "versionNonce": 663655344,
+      "isDeleted": false,
+      "id": "k61gvVWYmuqbH2AjIxBRr",
       "fillStyle": "solid",
       "strokeWidth": 1,
       "strokeStyle": "dashed",
       "roughness": 1,
       "opacity": 100,
-      "groupIds": [],
-      "strokeSharpness": "sharp",
+      "angle": 0,
+      "x": -306.0895435944268,
+      "y": 168.95655533019885,
+      "strokeColor": "#2b8a3e",
+      "backgroundColor": "transparent",
+      "width": 210,
+      "height": 23,
       "seed": 591916209,
-      "version": 67,
-      "versionNonce": 613249151,
-      "isDeleted": false,
-      "boundElements": null,
-      "updated": 1642045284002,
-      "text": "通信通过共享秘钥来解密数据",
+      "groupIds": [],
+      "roundness": null,
+      "boundElements": [],
+      "updated": 1676245347526,
+      "link": null,
+      "locked": false,
       "fontSize": 16,
       "fontFamily": 1,
+      "text": "通信通过共享秘钥来解密数据",
+      "baseline": 17,
       "textAlign": "left",
       "verticalAlign": "top",
-      "baseline": 17,
       "containerId": null,
       "originalText": "通信通过共享秘钥来解密数据"
     }

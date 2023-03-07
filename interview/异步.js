@@ -48,7 +48,7 @@
 // ------------------------------------------------------------------------------------------
 // async function async1() {
 //   console.log('async1 start') // 2
-//   await async2() // resolve(Promise.resolve())
+//   await async2()
 //   console.log('async1 end') // 7
 // }
 
@@ -72,16 +72,14 @@
 // })
 
 // console.log('script end') // 5
-// // 直接完毕，打印结果: 
-// //    我给的答案: 'script start' 'async1 start' async2 promise1 'script end' 'async1 end' promise2 setTimeout (错在了 async1 end 和 promise2 的顺序)
-// //    正确答案: 'script start' 'async1 start' async2 promise1 'script end' promise2 'async1 end' setTimeout
+// 直接完毕，打印结果: 'script start' 'async1 start' async2 promise1 'script end' 'async1 end' promise2 setTimeout
 
 // ------------------------------------------------------------------------------------------
 // console.log('script start') // 1
 
 // async function async1() {
 //   await async2()
-//   console.log('async1 end') // 7
+//   console.log('async1 end') // 5
 // }
 // async function async2() {
 //   console.log('async2 end') // 2
@@ -97,26 +95,26 @@
 //   resolve()
 // })
 //   .then(function() {
-//     console.log('promise1') // 5
+//     console.log('promise1') // 6
 //   })
 //   .then(function() {
-//     console.log('promise2') // 6
+//     console.log('promise2') // 7
 //   })
 
 // console.log('script end') // 4
 
-// // ------------------------------------------------------------------------------------------
-// /**
-//  * 第一题: L1 L2 M1 M2. 
-//  * 代码执行循序:
-//  * 当用户触发点击事件之后
-//  * 将 click1 上下文放到调用栈，调用栈开始执行代码。遇到 Promise.then() 则将其放到任务队列中，执行 console.log('L1') 打印 L1。
-//  * L1 执行完成之后，click1 上下文执行完毕，退出调用栈。
-//  * 调用栈此时为空，开始读取任务队列中回调，开始执行 console.log('M1') 打印 M1。
-//  * 执行完 M1 之后开始进入 click2 的上下文，将其上下文放到调用栈，将 Promise.then() 则将其放到任务队列中，执行 console.log('L2') 打印 L2。
-//  * L2 执行完成之后 click2 上下文执行完毕，退出调用栈。
-//  * 调用栈此时为空，开始读取任务队列中的会调用，开始执行 console.log('M2') 打印 M2。
-//  */
+// ------------------------------------------------------------------------------------------
+/**
+ * 第一题: L1 L2 M1 M2. 
+ * 代码执行循序:
+ * 当用户触发点击事件之后
+ * 将 click1 上下文放到调用栈，调用栈开始执行代码。遇到 Promise.then() 则将其放到任务队列中，执行 console.log('L1') 打印 L1。
+ * L1 执行完成之后，click1 上下文执行完毕，退出调用栈。
+ * 调用栈此时为空，开始读取任务队列中回调，开始执行 console.log('M1') 打印 M1。
+ * 执行完 M1 之后开始进入 click2 的上下文，将其上下文放到调用栈，将 Promise.then() 则将其放到任务队列中，执行 console.log('L2') 打印 L2。
+ * L2 执行完成之后 click2 上下文执行完毕，退出调用栈。
+ * 调用栈此时为空，开始读取任务队列中的会调用，开始执行 console.log('M2') 打印 M2。
+ */
 // const btn = document.getElementById('btn')
 // // 命名为 click1
 // btn.addEventListener('click', () => {
@@ -265,7 +263,7 @@
 //   console.log('catch:', err);
 // })
 /**
- * success1
+ * then: success1
  * 题解: 状态被改变之后就无法再被改变
  */
 
@@ -280,25 +278,26 @@
  */
 
 // 7.
-// const promise1 = new Promise((resolve, reject) => {
-//   setTimeout(() => {
-//     resolve('success')
-//   }, 1000)
-// })
-// const promise2 = promise1.then(() => {
-//   throw new Error('error!!!')
-// })
-// console.log('promise1', promise1)
-// console.log('promise2', promise2)
-// setTimeout(() => {
-//   console.log('promise1', promise1)
-//   console.log('promise2', promise2)
-// }, 2000)
+const promise1 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('success')
+  }, 1000)
+})
+const promise2 = promise1.then(() => {
+  throw new Error('error!!!')
+})
+console.log('promise1', promise1)
+console.log('promise2', promise2)
+setTimeout(() => {
+  console.log('promise1', promise1)
+  console.log('promise2', promise2)
+}, 2000)
 /**
  * promise1 Promise { <pending> }
  * promise2 Promise { <pending> }
  * error!!! 
  * 题解: throw new Error() 会阻塞代码执行，所以后面的 setTimeout 中的两次打印都不会执行
+ *      在浏览器中虽然 throw new Error('error!!!') 这里也报错了，但是没有阻塞 setTimeout 中的打印，promise2 对应的是 rejected 状态。
  */
 
 // 8. 
@@ -463,7 +462,7 @@
  * 1. 1 和 3 都是一秒之后打印
  * 2. 两秒之后触发 reject()，打印 2 和 Error: 2
  * 3. 四秒之后打印 4
- * 4. 因为有报错了，所以并不会执行到 then 方法中
+ * 4. 因为有报错了，所以并不会执行到 then 方法中，也不会被 catch 所捕获，因为 all 只捕获第一个报错的。
  * 注: 
  * 1. all 和 race 传入的数组中如果有会抛出异常的异步任务，那么只有最先抛出的错误会被捕获，并且是被 then 的第二个参数或者后面的 catch 捕获；但并不会影响数组中其它的异步任务的执行。
  * 2. 当 all 的数组中有任意一个异步任务报错之后 all 的 then 就不会执行
@@ -531,25 +530,25 @@
  */
 
 // 19.
-async function async1() {
-  console.log("async1 start");
-  await async2(); // 这里的 await 只会等待 async2 中的同步任务，并不会等待异步任务的结果
-  console.log("async1 end");
-  setTimeout(() => {
-    console.log('timer1')
-  }, 0)
-}
-async function async2() {
-  setTimeout(() => {
-    console.log('timer2')
-  }, 0)
-  console.log("async2");
-}
-async1();
-setTimeout(() => {
-  console.log('timer3')
-}, 0)
-console.log("start")
+// async function async1() {
+//   console.log("async1 start");
+//   await async2(); // 这里的 await 只会等待 async2 中的同步任务，并不会等待异步任务的结果
+//   console.log("async1 end");
+//   setTimeout(() => {
+//     console.log('timer1')
+//   }, 0)
+// }
+// async function async2() {
+//   setTimeout(() => {
+//     console.log('timer2')
+//   }, 0)
+//   console.log("async2");
+// }
+// async1();
+// setTimeout(() => {
+//   console.log('timer3')
+// }, 0)
+// console.log("start")
 /**
  * async1 start
  * async2
@@ -706,7 +705,7 @@ console.log("start")
  * 2
  * 5
  * resolve(6) 可以执行，但是没有地方接收，因为外部的 then 方法已经被 resolve(1) 执行了,
- * fulfilled 状态的 promise
+ * fulfilled 状态的 promise 对应的值是 1，这个值是通过 resolve(1) 确定的，一旦确定就不会被更改
  * 题解:
  * 首先会进入 Promise，打印出 3，之后进入下面的 Promise，打印出 7；
  * 遇到了定时器，将其加入宏任务队列；
@@ -751,7 +750,7 @@ console.log("start")
  * timer2
  * timer1
  * 题解: 
- * 首先执行同步带吗，打印出 script start；
+ * 首先执行同步代码，打印出 script start；
  * 遇到定时器 timer1 将其加入宏任务队列；
  * 之后是执行 Promise，打印出 promise1，由于 Promise 没有返回值，所以后面的代码不会执行；
  * 然后执行同步代码，打印出 script end；
