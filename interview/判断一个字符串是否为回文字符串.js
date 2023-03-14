@@ -18,7 +18,7 @@ const str1 = 'abcdba'
   if (!str) {
     return true
   }
-  // 转换成消息，转换成数组
+  // 转换成小写，转换成数组
   str = str.toLowerCase().split('')
   let start = 0
   let end = str.length - 1
@@ -41,7 +41,7 @@ const str1 = 'abcdba'
   if (!str) {
     return true
   }
-  // 转换成消息，转换成数组
+  // 转换成小写，转换成数组
   str = str.toLowerCase()
   let start = 0
   let end = str.length - 1
