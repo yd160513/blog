@@ -19,6 +19,11 @@ function inheritPrototype(subClass, superClass) {
   prototype.constructor = subClass
   // 指定对象，赋值给子类原型
   subClass.prototype = prototype
+  subClass.prototype.constructor = subClass
+  // 以某种方式来增强对象  
+  subClass.prototype.sayHi = function () {  
+    console.log('hi')  
+  }  
 }
 
 function Animal(name) {
@@ -43,7 +48,6 @@ function Cat(name) {
 
 // 第一步: 寄生式继承: 给创建父类原型副本(原型式继承)和原型链继承提供一个单独的方法
 inheritPrototype(Cat, Animal)
-Cat.prototype.construtor = Cat
 
 const cat = new Cat('加菲猫')
 console.log(cat.type) // Animal
@@ -60,4 +64,4 @@ console.log(cat2.test) // [2]
 console.log(cat instanceof Cat) // true. 实例是子类的实例
 console.log(cat instanceof Animal) // true. 实例也是父类的实例。原型链解决。
 
-console.log(Cat.prototype.construtor === Cat) // true
+console.log(Cat.prototype.constructor === Cat) // true

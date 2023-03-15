@@ -59,7 +59,7 @@ function Cat(name) {
 // 原型式继承核心
 const parentInstance = new Animal
 Cat.prototype = object(parentInstance)
-Cat.prototype.construtor = Cat
+Cat.prototype.constructor = Cat
 
 const cat = new Cat('加菲猫')
 console.log(cat.type) // Animal; 继承父类
@@ -70,7 +70,7 @@ cat.eat('猫粮') // 加菲猫 正在吃 猫粮; 原型方法
 console.log(cat instanceof Cat) // true. 实例是子类的实例
 console.log(cat instanceof Animal) // true. 实例也是父类的实例。原型链解决。
 
-console.log(Cat.prototype.construtor === Cat) // true
+console.log(Cat.prototype.constructor === Cat) // true
 
 /**
  * 问题:

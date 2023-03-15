@@ -27,9 +27,11 @@ function debounce (fn, wait) {
 }
 
 // 测试
-// let num = 1;
-// let content = document.getElementById('content');
-// function count() {
-//   content.innerHTML = num++;
-// };
-// content.onmousemove = debounce(count, 500);
+let num = 1;
+let content = document.getElementById('content');
+function count() {
+  content.innerHTML = num++;
+};
+
+content.onmousemove = debounce(count, 500);
+content.onmousemove = count
